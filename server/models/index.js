@@ -1,5 +1,10 @@
+const { Chore, List } = require("./Chore.js");
+
 module.exports = {
   User: require("./User.js"),
+  Chore,
+  List,
+  Reward: require("./Reward.js")
 };
 
 /*
@@ -10,6 +15,8 @@ module.exports = {
       description
       reward-points
     3. List Model
+      name
+      Date of week?
       array of Chores
     4. Reward Currency Model
       name

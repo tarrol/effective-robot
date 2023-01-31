@@ -34,6 +34,9 @@ const resolvers = {
       return { token, user };
     },
   },
+  ChoreMutation: {
+    
+  }
 };
 
 module.exports = resolvers;

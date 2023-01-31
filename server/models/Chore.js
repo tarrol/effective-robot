@@ -17,4 +17,18 @@ const choreSchema = new Schema({
     }
 });
 
-const Chore = model('Chore', choreSchema);
+const listSchema = new Schema({
+    name: {
+        type: String,
+        required: true,
+        trim: true,
+    },
+    chores: {
+        type: [choreSchema]
+    }
+})
+
+module.exports = {
+    Chore: model('Chore', choreSchema),
+    List: model('List', listSchema)
+}
