@@ -64,7 +64,7 @@ const resolvers = {
       );
       return chore;
     },
-    removeChore: async (parent, { _id, _idChore }) => {
+    deleteChore: async (parent, { _id, _idChore }) => {
       const list = await List.findOneAndUpdate(
         { _id },
         { $pull: { chores: { _id: _idChore } } },
