@@ -29,6 +29,6 @@ const listSchema = new Schema({
 })
 
 module.exports = {
-    Chore: model('Chore', choreSchema),
+    // Chore: model('Chore', choreSchema),
     List: model('List', listSchema)
 }

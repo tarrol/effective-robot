@@ -2,7 +2,7 @@ const { Chore, List } = require("./Chore.js");
 
 module.exports = {
   User: require("./User.js"),
-  Chore,
+  //Chore,
   List,
   Reward: require("./Reward.js")
 };
