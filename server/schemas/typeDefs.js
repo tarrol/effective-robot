@@ -45,7 +45,7 @@ const typeDefs = gql`
 
   type ChoreMutation {
     createChore(_id: String!, name: String!, description: String, points: Int): List
-    updateChore(_id: String!, name: String, description: String, points: Int): List
+    updateChore(_id: String!, name: String!, description: String!, points: Int!): List
     deleteChore(_id: String!, _idChore: String!): List
     createList(name: String!)
     deleteList(_id: String!)
