@@ -1,0 +1,115 @@
+/* Add some styles for aesthetics */
+    .container {
+      display: flex;
+      height: 100vh;
+    }
+
+    .main-box {
+      width: 500px;
+      height: 400px;
+      background-color: #fff;
+      border: 1px solid #000;
+      border-radius: 10px;
+      padding: 20px;
+      text-align: center;
+      margin: 50px auto;
+      overflow: hidden;
+    }
+
+    .title-box {
+      width: 100%;
+      height: 50px;
+      background-color: #fff;
+      border-bottom: 1px solid #000;
+      text-align: center;
+      line-height: 50px;
+      font-size: 24px;
+      font-weight: bold;
+    }
+
+    .login-button {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      background-color: #fff;
+      border: 1px solid #000;
+      border-radius: 10px;
+      padding: 10px 20px;
+      cursor: pointer;
+    }
+
+    .previous-box {
+      width: 200px;
+      height: 400px;
+      background-color: #fff;
+      border: 1px solid #000;
+      border-radius: 10px;
+      padding: 20px;
+      margin: 75px 20px;
+      overflow: auto;
+    }
+
+    .chore-box {
+      width: 100%;
+      height: 80px;
+      margin: 10px 0;
+      background-color: #fff;
+      border: 1px solid #000;
+      border-radius: 10px;
+      line-height: 80px;
+      font-size: 18px;
+      cursor: pointer;
+    }
+
+    .mode-box {
+      position: absolute;
+      bottom: 20px;
+      left: 20px;
+      width: 150px;
+      height: 50px;
+      background-color: #fff;
+      border: 1px solid #000;
+      border-radius: 10px;
+      padding: 10px;
+      font-size: 18px;
+      cursor: pointer;
+    }
+
+    /* Add styles for completed chores */
+    .completed {
+      background-color: green;
+      color: #fff;
+      cursor: default;
+    }
+
+    /* Add styles for dark mode */
+    .dark-mode {
+      background-color: #333;
+      color: #fff;
+    }
+
+    .dark-mode .main-box {
+      background-color: #333;
+      border-color: #fff;
+    }
+
+    .dark-mode .title-box {
+      border-color: #fff;
+    }
+
+    .dark-mode .login-button {
+      border-color: #fff;
+    }
+
+    .dark-mode .previous-box {
+      background-color: #333;
+      border-color: #fff;
+    }
+    .dark-mode .chore-box {
+      background-color: #333;
+      border-color: #fff;
+    }
+    .dark-mode .mode-box {
+      background-color: #333;
+      border-color: #fff;
+    }

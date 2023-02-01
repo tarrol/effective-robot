@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <title>Chores Game</title>
+<link rel="stylesheet" href="./Assets/stylesheet.css">
+</head>
+
+<body>
+  <div class="container">
+    <div class="previous-box">
+      <p>Previous Chores:</p>
+      <div class="chore-box">Chore 1</div>
+      <div class="chore-box">Chore 2</div>
+      <div class="chore-box">Chore 3</div>
+      <!-- Add more chores as needed -->
+    </div>
+    <div class="main-box">
+      <div class="title-box">Chores List</div>
+      <div class="chore-box">Chore 1</div>
+      <div class="chore-box">Chore 2</div>
+      <div class="chore-box">Chore 3</div>
+      <!-- Add more chores as needed -->
+    </div>
+  </div>
+  <div class="login-button">Log In</div>
+  <div class="mode-box">
+    <p>Light Mode</p>
+  </div>
+  <script>
+    // Add JavaScript for completing a chore
+    const choreBoxes = document.querySelectorAll('.chore-box');
+    choreBoxes.forEach(choreBox => {
+      choreBox.addEventListener('click', () => {
+        choreBox.classList.add('completed');
+      });
+    });
+      // Add JavaScript for light and dark mode
+    const modeBox = document.querySelector('.mode-box');
+    modeBox.addEventListener('click', () => {
+      document.body.classList.toggle('dark-mode');
+      if (modeBox.textContent === 'Light Mode') {
+        modeBox.innerHTML = '<p>Dark Mode</p>';
+      } else {
+        modeBox.innerHTML = '<p>Light Mode</p>';
+      }
+    });
+    </script>
+
+  </body>
+</html>
