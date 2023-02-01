@@ -73,14 +73,31 @@ const resolvers = {
       await Chore.findOneAndDelete({ _id: _idChore });
       return list;
     },
-    createList: async (parent, { name }) => {
-      const list = await List.create({ name: name, chores: [] });
+    createList: async (parent, { _idAdmin, name }) => {
+      const list = await List.create({ name: name, chores: [], admin: _idAdmin });
       return list;
     },
     deleteList: async (parent, { _id }) => {
       const list = await List.findOneAndDelete({ _id: _id });
     },
   },
+  RewardMutation: {
+    createReward: async (parent, { _idAdmin, name, cost }) => {
+      const reward = await Reward.create({ name: name, cost: cost, admin: _idAdmin });
+      return reward;
+    },
+    updateReward: async (parent, { _id, name, cost }) => {
+      const reward = await Reward.findOneAndUpdate(
+        { _id },
+        { name: name, cost: cost },
+        { new: true }
+      );
+      return reward;
+    },
+    deleteReward: async (parent, {_id }) => {
+      await Reward.findOneAndDelete({ _id: _id });
+    }
+  }
 };
 
 module.exports = resolvers;

@@ -9,6 +9,10 @@ const rewardSchema = new Schema({
     cost: {
         type: Number,
         default: 0
+    },
+    admin: {
+        type: Schema.Types.ObjectId,
+        ref: "User"
     }
 });
 

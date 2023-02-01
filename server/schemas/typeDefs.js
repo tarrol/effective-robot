@@ -45,10 +45,16 @@ const typeDefs = gql`
 
   type ChoreMutation {
     createChore(_id: String!, name: String!, description: String, points: Int): List
-    updateChore(_id: String!, name: String!, description: String!, points: Int!): List
+    updateChore(_id: String!, name: String!, description: String!, points: Int!): Chore
     deleteChore(_id: String!, _idChore: String!): List
-    createList(name: String!)
+    createList(_idAdmin: String!, name: String!): List
     deleteList(_id: String!)
+  }
+
+  type RewardMutation {
+    createReward(_idAdmin: String!, name: String!, cost: Int): Reward
+    updateReward(_id: String!, name: String!, cost: Int!): Reward
+    deleteReward:(_id: String!)
   }
 `;
 

@@ -25,6 +25,10 @@ const listSchema = new Schema({
     },
     chores: {
         type: [choreSchema]
+    },
+    admin: {
+        type: Schema.Types.ObjectId,
+        ref: "User"
     }
 })
 
