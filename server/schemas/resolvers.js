@@ -20,8 +20,12 @@ const resolvers = {
     },
   },
   Mutation: {
-    register: async (parent, { name, email, password }) => {
-      const user = await User.create({ name, email, password });
+    register: async (parent, { name, email, password, pin }) => {
+      const user = await User.create({ name, email, password, pin });
+      user.profiles.$push({
+        name: name,
+        isAdmin: true,
+      });
       const token = signToken(user);
       return { token, user };
     },
@@ -41,6 +45,14 @@ const resolvers = {
       const token = signToken(user);
       return { token, user };
     },
+    createProfile: async (parent, { _id, name }) => {
+      const user = await User.findByIdAndUpdate(
+        { _id },
+        { $push: { profiles: { name: name, isAdmin: false } } },
+        { new: true }
+      );
+      return user;
+    },
   },
   ChoreMutation: {
     createChore: async (parent, { _id, name, description, points }) => {
@@ -49,8 +61,7 @@ const resolvers = {
         description: description,
         points: points,
       });
-      List.findByIdAndUpdate
-      const list = await List.findOneAndUpdate(
+      const list = await List.findByIdAndUpdate(
         { _id },
         { $push: { chores: chore } },
         { new: true }
@@ -58,7 +69,7 @@ const resolvers = {
       return list; 
     },
     updateChore: async (parent, { _id, name, description, points }) => {
-      const chore = await Chore.findOneAndUpdate(
+      const chore = await Chore.findByIdAndUpdate(
         { _id },
         { name: name, description: description, points: points },
         { new: true }
@@ -66,7 +77,7 @@ const resolvers = {
       return chore;
     },
     deleteChore: async (parent, { _id, _idChore }) => {
-      const list = await List.findOneAndUpdate(
+      const list = await List.findByIdAndUpdate(
         { _id },
         { $pull: { chores: { _id: _idChore } } },
         { new: true }
@@ -75,7 +86,11 @@ const resolvers = {
       return list;
     },
     createList: async (parent, { _idAdmin, name }) => {
-      const list = await List.create({ name: name, chores: [], admin: _idAdmin });
+      const list = await List.create({
+        name: name,
+        chores: [],
+        admin: _idAdmin,
+      });
       return list;
     },
     deleteList: async (parent, { _id }) => {
@@ -84,21 +99,25 @@ const resolvers = {
   },
   RewardMutation: {
     createReward: async (parent, { _idAdmin, name, cost }) => {
-      const reward = await Reward.create({ name: name, cost: cost, admin: _idAdmin });
+      const reward = await Reward.create({
+        name: name,
+        cost: cost,
+        admin: _idAdmin,
+      });
       return reward;
     },
     updateReward: async (parent, { _id, name, cost }) => {
-      const reward = await Reward.findOneAndUpdate(
+      const reward = await Reward.findByIdAndUpdate(
         { _id },
         { name: name, cost: cost },
         { new: true }
       );
       return reward;
     },
-    deleteReward: async (parent, {_id }) => {
+    deleteReward: async (parent, { _id }) => {
       await Reward.findOneAndDelete({ _id: _id });
-    }
-  }
+    },
+  },
 };
 
 module.exports = resolvers;
