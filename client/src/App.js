@@ -4,7 +4,7 @@ import Header from "./pages/Header";
 import Footer from "./pages/Footer";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
-import Register from "./pages/Register";
+import Register from "./pages/Register/index";
 
 function App() {
   const [currentTab, setCurrentTab] = useState("about");
@@ -15,8 +15,8 @@ function App() {
         return <Home />;
       case "login":
         return <Login />;
-      case "contact":
-        return <Register />;
+      case "register":
+        return <Register/>;
       default:
         return null;
     }
