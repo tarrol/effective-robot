@@ -53,6 +53,27 @@ const resolvers = {
       );
       return user;
     },
+    setPin: async (parent, { _id, pin }) => {
+      const user = await User.findByIdAndUpdate(
+        { _id },
+        { pin: pin },
+        { new: true }
+      );
+      return user;
+    },
+    setAdmin: async (parent, { _id, name }) => {
+      const user = await User.findById(_id, function(err, user){
+        const oldProf = user.profiles.find(prof => prof.isAdmin == true);
+        if (oldProf) {
+          oldProf.isAdmin = false;
+          user.save();
+        }
+
+        const profile = user.profiles.find(prof => prof.name == name);
+        profile.isAdmin = true;
+        user.save();
+      })
+    }
   },
   ChoreMutation: {
     createChore: async (parent, { _id, name, description, points }) => {

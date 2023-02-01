@@ -48,7 +48,7 @@ const typeDefs = gql`
     register(name: String!, email: String!, password: String!, pin: String!): Auth
     login(email: String!, password: String!): Auth
     createProfile(_id: String!, name: String!): User
-    setPin(_id: String!): User
+    setPin(_id: String!, pin: Int!): User
     setAdmin(_id: String!, name: String!): User
   }
 
