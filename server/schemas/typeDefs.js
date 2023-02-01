@@ -45,11 +45,11 @@ const typeDefs = gql`
   }
 
   type Mutation {
-    register(name: String!, email: String!, password: String!, pin:String!): Auth
+    register(name: String!, email: String!, password: String!, pin: String!): Auth
     login(email: String!, password: String!): Auth
     createProfile(_id: String!, name: String!): User
-    updateProfile(_id: String!, )
-    deleteProfile(_id: String!)
+    setPin(_id: String!): User
+    setAdmin(_id: String!, name: String!): User
   }
 
   type ChoreMutation {
@@ -57,13 +57,13 @@ const typeDefs = gql`
     updateChore(_id: String!, name: String!, description: String!, points: Int!): Chore
     deleteChore(_id: String!, _idChore: String!): List
     createList(_idAdmin: String!, name: String!): List
-    deleteList(_id: String!)
+    deleteList(_id: String!): List
   }
 
   type RewardMutation {
     createReward(_idAdmin: String!, name: String!, cost: Int): Reward
     updateReward(_id: String!, name: String!, cost: Int!): Reward
-    deleteReward:(_id: String!)
+    deleteReward(_id: String!): Reward
   }
 `;
 

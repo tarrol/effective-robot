@@ -20,11 +20,11 @@ const resolvers = {
     },
   },
   Mutation: {
-    register: async (parent, { name, email, password, pin }) => {
-      const user = await User.create({ name, email, password, pin });
+    register: async (parent, { name, email, password}) => {
+      const user = await User.create({ name, email, password});
       user.profiles.$push({
         name: name,
-        isAdmin: true,
+        isAdmin: false,
       });
       const token = signToken(user);
       return { token, user };
