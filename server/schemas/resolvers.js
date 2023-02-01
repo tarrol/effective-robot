@@ -73,6 +73,13 @@ const resolvers = {
       await Chore.findOneAndDelete({ _id: _idChore });
       return list;
     },
+    createList: async (parent, { name }) => {
+      const list = await List.create({ name: name, chores: [] });
+      return list;
+    },
+    deleteList: async (parent, { _id }) => {
+      const list = await List.findOneAndDelete({ _id: _id });
+    },
   },
 };
 
