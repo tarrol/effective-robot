@@ -23,7 +23,7 @@ const typeDefs = gql`
   type List {
     _id: ID!
     name: String!
-    chores: [Chore]
+    chores: [Chore]!
   }
 
   type Reward {
