@@ -20,8 +20,8 @@ const resolvers = {
     },
   },
   Mutation: {
-    register: async (parent, { name, email, password}) => {
-      const user = await User.create({ name, email, password});
+    register: async (parent, { name, email, password }) => {
+      const user = await User.create({ name, email, password });
       user.profiles.$push({
         name: name,
         isAdmin: false,
@@ -62,18 +62,18 @@ const resolvers = {
       return user;
     },
     setAdmin: async (parent, { _id, name }) => {
-      const user = await User.findById(_id, function(err, user){
-        const oldProf = user.profiles.find(prof => prof.isAdmin == true);
+      const user = await User.findById(_id, function (err, user) {
+        const oldProf = user.profiles.find((prof) => prof.isAdmin == true);
         if (oldProf) {
           oldProf.isAdmin = false;
           user.save();
         }
 
-        const profile = user.profiles.find(prof => prof.name == name);
+        const profile = user.profiles.find((prof) => prof.name == name);
         profile.isAdmin = true;
         user.save();
-      })
-    }
+      });
+    },
   },
   ChoreMutation: {
     createChore: async (parent, { _id, name, description, points }) => {
@@ -87,7 +87,7 @@ const resolvers = {
         { $push: { chores: chore } },
         { new: true }
       );
-      return list; 
+      return list;
     },
     updateChore: async (parent, { _id, name, description, points }) => {
       const chore = await Chore.findByIdAndUpdate(

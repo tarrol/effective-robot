@@ -2,8 +2,8 @@ const { gql } = require("apollo-server-express");
 
 const typeDefs = gql`
   type profileSchema {
-    name: String!,
-    isAdmin: Boolean!,
+    name: String!
+    isAdmin: Boolean!
   }
   type User {
     _id: ID
@@ -40,12 +40,17 @@ const typeDefs = gql`
 
   type Query {
     me: User
-    list(_id: String): [List] 
+    list(_id: String): [List]
     reward(_id: String): [Reward]
   }
 
   type Mutation {
-    register(name: String!, email: String!, password: String!, pin: String!): Auth
+    register(
+      name: String!
+      email: String!
+      password: String!
+      pin: String!
+    ): Auth
     login(email: String!, password: String!): Auth
     createProfile(_id: String!, name: String!): User
     setPin(_id: String!, pin: Int!): User
@@ -53,8 +58,18 @@ const typeDefs = gql`
   }
 
   type ChoreMutation {
-    createChore(_id: String!, name: String!, description: String, points: Int): List
-    updateChore(_id: String!, name: String!, description: String!, points: Int!): Chore
+    createChore(
+      _id: String!
+      name: String!
+      description: String
+      points: Int
+    ): List
+    updateChore(
+      _id: String!
+      name: String!
+      description: String!
+      points: Int!
+    ): Chore
     deleteChore(_id: String!, _idChore: String!): List
     createList(_idAdmin: String!, name: String!): List
     deleteList(_id: String!): List

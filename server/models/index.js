@@ -4,7 +4,7 @@ module.exports = {
   User: require("./User.js"),
   Chore,
   List,
-  Reward: require("./Reward.js")
+  Reward: require("./Reward.js"),
 };
 
 /*
