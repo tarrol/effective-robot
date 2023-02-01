@@ -49,12 +49,13 @@ const resolvers = {
         description: description,
         points: points,
       });
+      List.findByIdAndUpdate
       const list = await List.findOneAndUpdate(
         { _id },
         { $push: { chores: chore } },
         { new: true }
       );
-      return list;
+      return list; 
     },
     updateChore: async (parent, { _id, name, description, points }) => {
       const chore = await Chore.findOneAndUpdate(
