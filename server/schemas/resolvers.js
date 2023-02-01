@@ -1,5 +1,5 @@
 const { AuthenticationError } = require("apollo-server-express");
-const { User, List, Reward } = require("../models");
+const { User, List, Reward, Chore } = require("../models");
 const { signToken } = require("../utils/auth.js");
 
 const resolvers = {
@@ -17,7 +17,7 @@ const resolvers = {
     reward: async (parent, { _id }) => {
       const params = _id ? { _id } : {};
       return Reward.find(params);
-    }
+    },
   },
   Mutation: {
     register: async (parent, { name, email, password }) => {
@@ -43,8 +43,37 @@ const resolvers = {
     },
   },
   ChoreMutation: {
-
-  }
+    createChore: async (parent, { _id, name, description, points }) => {
+      const chore = await Chore.create({
+        name: name,
+        description: description,
+        points: points,
+      });
+      const list = await List.findOneAndUpdate(
+        { _id },
+        { $push: { chores: chore } },
+        { new: true }
+      );
+      return list;
+    },
+    updateChore: async (parent, { _id, name, description, points }) => {
+      const chore = await Chore.findOneAndUpdate(
+        { _id },
+        { name: name, description: description, points: points },
+        { new: true }
+      );
+      return chore;
+    },
+    deleteChore: async (parent, { _id, _idChore }) => {
+      const list = await List.findOneAndUpdate(
+        { _id },
+        { $pull: { chores: { _id: _idChore } } },
+        { new: true }
+      );
+      await Chore.findOneAndDelete({ _id: _idChore });
+      return list;
+    },
+  },
 };
 
 module.exports = resolvers;
