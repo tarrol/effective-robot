@@ -7,7 +7,7 @@ import Login from "./pages/Login";
 import Register from "./pages/Register/index";
 
 function App() {
-  const [currentTab, setCurrentTab] = useState("about");
+  const [currentTab, setCurrentTab] = useState("home"); // Initial value set to "home"
 
   const renderTab = () => {
     switch (currentTab) {
