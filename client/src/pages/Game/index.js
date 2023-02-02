@@ -23,11 +23,29 @@ const ProtectedPage = () => {
   return (
     <div>
       Welcome to the Chores Game
+      <EndpointBox endpoint='<API_ENDPOINT>' />
       <ul>
         {data.map(item => (
           <li key={item.id}>{item.name}</li>
         ))}
       </ul>
+    </div>
+  );
+};
+
+const EndpointBox = ({ endpoint }) => {
+  return (
+    <div style={{
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
+      height: '50vh',
+      width: '50vw',
+      margin: '0 auto',
+      border: '1px solid black',
+      padding: '1rem'
+    }}>
+      API Endpoint: {endpoint}
     </div>
   );
 };
