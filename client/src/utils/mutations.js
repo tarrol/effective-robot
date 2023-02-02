@@ -25,3 +25,18 @@ export const LOGIN_USER = gql`
     }
   }
 `;
+
+export const CREATE_PROFILE = gql`
+  mutation createProfile($_id: String!, $name: String!) {
+    createProfile(_id: $_id, name: $name) {
+      _id
+      name
+      email
+      password
+      profiles {
+        name
+        isAdmin
+      }
+    }
+  }
+`;
