@@ -6,6 +6,12 @@ export const QUERY_ME = gql`
       _id
       name
       email
+      password
+      pin
+      profiles {
+        name
+        isAdmin
+      }
     }
   }
 `;
