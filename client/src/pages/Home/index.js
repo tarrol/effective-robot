@@ -5,15 +5,15 @@ function Home() {
   const [index, setIndex] = useState(0);
   const images = [
     {
-      src: 'image1.jpg',
+      src: '#',
       text: 'Image 1'
     },
     {
-      src: 'image2.jpg',
+      src: '#',
       text: 'Image 2'
     },
     {
-      src: 'image3.jpg',
+      src: '#',
       text: 'Image 3'
     }
   ];

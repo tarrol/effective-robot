@@ -22,10 +22,12 @@ const resolvers = {
   Mutation: {
     register: async (parent, { name, email, password }) => {
       const user = await User.create({ name, email, password });
-      user.profiles.$push({
+      user.profiles.push({
         name: name,
         isAdmin: false,
       });
+      // await User.findByIdAndUpdate()
+      // user.save();
       const token = signToken(user);
       return { token, user };
     },

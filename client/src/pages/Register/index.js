@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import { useMutation } from '@apollo/client';
+import { REGISTER_USER } from '../../utils/mutations'
 
 function Register() {
   const [username, setUsername] = useState('');
@@ -6,6 +8,8 @@ function Register() {
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [error, setError] = useState('');
+
+  const [registerUser, { _error }] = useMutation(REGISTER_USER);
 
   function handleUsernameChange(event) {
     setUsername(event.target.value);
@@ -33,23 +37,27 @@ function Register() {
     }
 
     try {
-      const response = await fetch('<YOUR_REGISTRATION_API_ENDPOINT>', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          username,
-          email,
-          password,
-        }),
-      });
+      // const response = await fetch('<YOUR_REGISTRATION_API_ENDPOINT>', {
+      //   method: 'POST',
+      //   headers: { 'Content-Type': 'application/json' },
+      //   body: JSON.stringify({
+      //     username,
+      //     email,
+      //     password,
+      //   }),
+      // });
 
-      const result = await response.json();
-      if (result.success) {
-        console.log(`Successfully registered user ${username}`);
-        setError('');
-      } else {
-        setError(result.error);
-      }
+      // const result = await response.json();
+      // if (result.success) {
+      //   console.log(`Successfully registered user ${username}`);
+      //   setError('');
+      // } else {
+      //   setError(result.error);
+      // }
+      const { data } = await registerUser({
+        variables: { name: username, email: email, password: password }
+      });
+      console.log(data);
     } catch (error) {
       setError('Error while registering user');
       console.error(error);

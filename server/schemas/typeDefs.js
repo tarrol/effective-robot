@@ -49,7 +49,6 @@ const typeDefs = gql`
       name: String!
       email: String!
       password: String!
-      pin: String!
     ): Auth
     login(email: String!, password: String!): Auth
     createProfile(_id: String!, name: String!): User

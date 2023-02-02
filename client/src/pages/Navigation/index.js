@@ -16,7 +16,7 @@ function Navigation(props) {
           </li>
         )}
         <li className={currentTab === "login" ? "mx-2 navActive" : "mx-2"}>
-          <span onClick={() => setIsLoggedIn(true)}>Login</span>
+          <span onClick={() => setCurrentTab("login")}>Login</span>
         </li>
         <li className={currentTab === "register" ? "mx-2 navActive" : "mx-2"}>
           <span onClick={() => setCurrentTab("register")}>Register</span>
