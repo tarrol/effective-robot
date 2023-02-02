@@ -65,4 +65,21 @@ export const DELETE_CHORE = gql`
       }
     }
   }
-`
+`;
+
+export const CREATE_LIST = gql`
+  mutation createList($_idAdmin: String!, $name: String!) {
+    createList(_idAdmin: $_idAdmin, name: $name) {
+      _id 
+      name
+    }
+  }
+`;
+
+export const DELETE_LIST = gql`
+  mutation deleteList($_id: String!) {
+    deleteList(_id: $_id) {
+      _id
+    }
+  }
+`;
