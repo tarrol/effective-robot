@@ -25,3 +25,37 @@ export const LOGIN_USER = gql`
     }
   }
 `;
+
+export const CREATE_PROFILE = gql`
+  mutation createProfile($_id: String!, $name: String!) {
+    createProfile(_id: $_id, name: $name) {
+      _id
+      name
+      email
+      password
+      profiles {
+        name
+        isAdmin
+      }
+    }
+  }
+`;
+
+export const SET_PIN = gql`
+  mutation setPin($_id: String!, $name: String!) {
+    setPin(_id: $_id, name: $name) {
+      _id
+      pin
+    }
+  }
+`
+export const SET_ADMIN = gql`
+  mutation setAdmin($_id: String!, $name: String!) {
+    setAdmin(_id: $_id, name: $name)
+    _id
+    profiles {
+      name
+      isAdmin
+    }
+  }
+`

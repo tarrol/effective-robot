@@ -1,11 +1,17 @@
 const { gql } = require("apollo-server-express");
 
 const typeDefs = gql`
+  type profileSchema {
+    name: String!
+    isAdmin: Boolean!
+  }
   type User {
     _id: ID
     name: String
     email: String
     password: String
+    pin: String
+    profiles: [profileSchema]
   }
 
   type Auth {
@@ -13,13 +19,66 @@ const typeDefs = gql`
     user: User
   }
 
+  type Chore {
+    _id: ID!
+    name: String!
+    description: String
+    points: Int
+  }
+
+  type List {
+    _id: ID!
+    name: String!
+    chores: [Chore]!
+  }
+
+  type Reward {
+    _id: ID!
+    name: String!
+    cost: Int
+  }
+
   type Query {
     me: User
+    list(_id: String): [List]
+    reward(_id: String): [Reward]
   }
 
   type Mutation {
-    register(name: String!, email: String!, password: String!): Auth
+    register(
+      name: String!
+      email: String!
+      password: String!
+      pin: String!
+    ): Auth
     login(email: String!, password: String!): Auth
+    createProfile(_id: String!, name: String!): User
+    setPin(_id: String!, pin: Int!): User
+    setAdmin(_id: String!, name: String!): User
+  }
+
+  type ChoreMutation {
+    createChore(
+      _id: String!
+      name: String!
+      description: String
+      points: Int
+    ): List
+    updateChore(
+      _id: String!
+      name: String!
+      description: String!
+      points: Int!
+    ): Chore
+    deleteChore(_id: String!, _idChore: String!): List
+    createList(_idAdmin: String!, name: String!): List
+    deleteList(_id: String!): List
+  }
+
+  type RewardMutation {
+    createReward(_idAdmin: String!, name: String!, cost: Int): Reward
+    updateReward(_id: String!, name: String!, cost: Int!): Reward
+    deleteReward(_id: String!): Reward
   }
 `;
 
