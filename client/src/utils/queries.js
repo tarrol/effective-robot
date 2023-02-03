@@ -26,6 +26,7 @@ export const QUERY_LIST = gql`
         name
         description
         points
+        flavorText
       }
     }
   }
@@ -41,6 +42,7 @@ query MyLists($id: String!) {
       description
       name
       points
+      flavorText
     }
   }
 }

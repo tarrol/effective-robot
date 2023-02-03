@@ -16,6 +16,10 @@ const choreSchema = new Schema({
     type: Number,
     default: 0,
   },
+  flavorText: {
+    type: String,
+    default: "",
+  },
   listId: {
     type: Schema.Types.ObjectId,
     ref: "List"

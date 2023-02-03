@@ -96,12 +96,13 @@ const resolvers = {
 
     // Chore Mutations
     //tested: works
-    createChore: async (parent, { _id, name, description, points }) => {
+    createChore: async (parent, { _id, name, description, points, flavorText }) => {
       const chore = await Chore.create({
         name: name,
         description: description,
         points: points,
-        listId: _id
+        listId: _id,
+        flavorText: flavorText
       });
       const list = await List.findByIdAndUpdate(
         { _id },
@@ -111,10 +112,10 @@ const resolvers = {
       return list;
     },
     // tested: works
-    updateChore: async (parent, { _id, _idChore, name, description, points }) => {
+    updateChore: async (parent, { _id, _idChore, name, description, points, flavorText }) => {
       const chore = await Chore.findOneAndUpdate(
         { _id: _idChore },
-        { name: name, description: description, points: points },
+        { name: name, description: description, points: points, flavorText: flavorText },
         { new: true }
       );
       const list = await List.findOneAndUpdate(

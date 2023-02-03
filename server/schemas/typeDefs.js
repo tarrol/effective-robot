@@ -24,6 +24,7 @@ const typeDefs = gql`
     name: String!
     description: String
     points: Int
+    flavorText: String
     listId: ID
   }
 
