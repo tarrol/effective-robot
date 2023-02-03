@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
+import { FaSignInAlt } from "react-icons/fa";
 
 function Login() {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
 
   function handleUsernameChange(event) {
     setUsername(event.target.value);
@@ -17,36 +18,46 @@ function Login() {
     event.preventDefault();
 
     // Validate the input values and perform authentication here
-    if (username !== 'admin' || password !== 'password') {
-      setError('Incorrect information');
+    if (username !== "admin" || password !== "password") {
+      setError("Incorrect information");
     } else {
       console.log(`Username: ${username}, Password: ${password}`);
-      setError('');
+      setError("");
     }
   }
 
   return (
-    <form onSubmit={handleSubmit}>
-      {error && <div style={{ color: 'red' }}>{error}</div>}
-      <div>
-        <label htmlFor="username">Username:</label>
+    <form onSubmit={handleSubmit} className="center login-page">
+      {error && <div style={{ color: "red" }}>{error}</div>}
+      <div className="center">
+        <h1>
+          <FaSignInAlt /> Login
+        </h1>
+        <p>Login to continue</p>
+      </div>
+      <div className="form-group">
+        <label htmlFor="username"></label>
         <input
           type="text"
           id="username"
           value={username}
+          placeholder="Enter your username  "
           onChange={handleUsernameChange}
         />
       </div>
-      <div>
-        <label htmlFor="password">Password:</label>
+      <div className="form-group">
+        <label htmlFor="password"></label>
         <input
           type="password"
           id="password"
           value={password}
+          placeholder="Enter your password "
           onChange={handlePasswordChange}
         />
       </div>
-      <button type="submit">Login</button>
+      <button className="login-button" type="submit">
+        Login
+      </button>
     </form>
   );
 }
