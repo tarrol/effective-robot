@@ -30,7 +30,7 @@ const resolvers = {
       const user = await User.create({ name, email, password });
       user.profiles.push({
         name: name,
-        isAdmin: false,
+        isAdmin: true,
       });
       const updatedUser = await User.findByIdAndUpdate(
         { _id: user._id },
