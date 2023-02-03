@@ -1,70 +1,44 @@
 import { gql } from "@apollo/client";
 
 export const CREATE_CHORE = gql`
-  mutation createChore(
-    $_id: String!,
-    $name: String!,
-    $description: String,
-    $points: Int
-  ) {
-    createChore(
-      _id: $_id,
-      name: $name,
-      description: $description,
-      points: $points
-    ) {
+mutation CreateChore($id: String!, $name: String!, $description: String, $points: Int) {
+  createChore(_id: $id, name: $name, description: $description, points: $points) {
+    _id
+    chores {
       _id
-      name
-      chores {
-        _id
-        name
-        description
-        points
-      }
-    }
-  }
-`;
-
-export const UPDATE_CHORE = gql`
-  mutation updateChore(
-    $_id: String!,
-    $name: String!,
-    $description: String!,
-    $points: Int!
-  ) {
-    updateChore(
-      _id: $_id,
-      name: $name,
-      description: $description,
-      points: $points
-    ) {
-      _id
-      name
       description
+      name
       points
     }
   }
+}
+`;
+
+export const UPDATE_CHORE = gql`
+mutation UpdateChore($id: String!, $idChore: String!, $name: String!, $description: String!, $points: Int!) {
+  updateChore(_id: $id, _idChore: $idChore, name: $name, description: $description, points: $points) {
+    chores {
+      _id
+      description
+      name
+      points
+    }
+  }
+}
 `;
 
 export const DELETE_CHORE = gql`
-  mutation deleteChore(
-    $_id: String!,
-    $_idChore: String!
-  ) {
-    deleteChore(
-      _id: $_id,
-      _idChore: $_idChore
-    ) {
+mutation DeleteChore($id: String!, $idChore: String!) {
+  deleteChore(_id: $id, _idChore: $idChore) {
+    _id
+    chores {
       _id
+      description
       name
-      chores {
-        id
-        name
-        description
-        points
-      }
+      points
     }
   }
+}
 `;
 
 export const CREATE_LIST = gql`

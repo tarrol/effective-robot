@@ -24,12 +24,14 @@ const typeDefs = gql`
     name: String!
     description: String
     points: Int
+    listId: ID
   }
 
   type List {
     _id: ID!
     name: String!
     chores: [Chore]!
+    admin: ID
   }
 
   type Reward {
@@ -56,7 +58,7 @@ const typeDefs = gql`
     setAdmin(_id: String!, name: String!): User
 
     createChore(_id: String!, name: String!, description: String, points: Int): List
-    updateChore(_id: String!, name: String!, description: String!, points: Int!): Chore
+    updateChore(_id: String!, _idChore: String!, name: String!, description: String!, points: Int!): List
     deleteChore(_id: String!, _idChore: String!): List
     
     createList(_idAdmin: String!, name: String!): List

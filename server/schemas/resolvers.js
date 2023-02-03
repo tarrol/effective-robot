@@ -35,7 +35,7 @@ const resolvers = {
       const token = signToken(updatedUser);
       return { token, updatedUser };
     },
-    // untested
+    // tested: works
     login: async (parent, { email, password }) => {
       const user = await User.findOne({ email });
 
@@ -96,6 +96,7 @@ const resolvers = {
         name: name,
         description: description,
         points: points,
+        listId: _id
       });
       const list = await List.findByIdAndUpdate(
         { _id },
@@ -104,14 +105,25 @@ const resolvers = {
       );
       return list;
     },
-    updateChore: async (parent, { _id, name, description, points }) => {
-      const chore = await Chore.findByIdAndUpdate(
-        { _id },
+    // tested: works
+    updateChore: async (parent, { _id, _idChore, name, description, points }) => {
+      const chore = await Chore.findOneAndUpdate(
+        { _id: _idChore },
         { name: name, description: description, points: points },
         { new: true }
       );
-      return chore;
+      const list = await List.findOneAndUpdate(
+        { _id: _id, "chores._id": _idChore },
+        { $set: {
+          "chores.$.name": name,
+          "chores.$.description" : description,
+          "chores.$.points": points
+        } },
+        { new: true }
+      )
+      return list;
     },
+    // tested: works
     deleteChore: async (parent, { _id, _idChore }) => {
       const list = await List.findByIdAndUpdate(
         { _id },
@@ -130,11 +142,15 @@ const resolvers = {
       });
       return list;
     },
+    // tested: works
     deleteList: async (parent, { _id }) => {
       const list = await List.findOneAndDelete({ _id: _id });
+      await Chore.deleteMany({listId: _id});
+      return list;
     },
 
     // Reward Mutations
+    // tested: works
     createReward: async (parent, { _idAdmin, name, cost }) => {
       const reward = await Reward.create({
         name: name,
@@ -143,6 +159,7 @@ const resolvers = {
       });
       return reward;
     },
+    // tested: works
     updateReward: async (parent, { _id, name, cost }) => {
       const reward = await Reward.findByIdAndUpdate(
         { _id },
@@ -151,8 +168,10 @@ const resolvers = {
       );
       return reward;
     },
+    // tested: works
     deleteReward: async (parent, { _id }) => {
-      await Reward.findOneAndDelete({ _id: _id });
+      const reward = await Reward.findOneAndDelete({ _id: _id });
+      return reward;
     },
   },
 
