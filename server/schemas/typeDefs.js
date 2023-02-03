@@ -52,33 +52,21 @@ const typeDefs = gql`
     ): Auth
     login(email: String!, password: String!): Auth
     createProfile(_id: String!, name: String!): User
-    setPin(_id: String!, pin: Int!): User
+    setPin(_id: String!, pin: String!): User
     setAdmin(_id: String!, name: String!): User
-  }
 
-  type ChoreMutation {
-    createChore(
-      _id: String!
-      name: String!
-      description: String
-      points: Int
-    ): List
-    updateChore(
-      _id: String!
-      name: String!
-      description: String!
-      points: Int!
-    ): Chore
+    createChore(_id: String!, name: String!, description: String, points: Int): List
+    updateChore(_id: String!, name: String!, description: String!, points: Int!): Chore
     deleteChore(_id: String!, _idChore: String!): List
+    
     createList(_idAdmin: String!, name: String!): List
     deleteList(_id: String!): List
-  }
-
-  type RewardMutation {
+    
     createReward(_idAdmin: String!, name: String!, cost: Int): Reward
     updateReward(_id: String!, name: String!, cost: Int!): Reward
     deleteReward(_id: String!): Reward
   }
+
 `;
 
 module.exports = typeDefs;

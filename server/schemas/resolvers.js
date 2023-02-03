@@ -20,17 +20,22 @@ const resolvers = {
     },
   },
   Mutation: {
+    // tested: works
     register: async (parent, { name, email, password }) => {
       const user = await User.create({ name, email, password });
       user.profiles.push({
         name: name,
         isAdmin: false,
       });
-      // await User.findByIdAndUpdate()
-      // user.save();
-      const token = signToken(user);
-      return { token, user };
+      const updatedUser = await User.findByIdAndUpdate(
+        { _id: user._id },
+        { $push: { profiles: { name: user.name, isAdmin: false } } },
+        { new: true } 
+      )
+      const token = signToken(updatedUser);
+      return { token, updatedUser };
     },
+    // untested
     login: async (parent, { email, password }) => {
       const user = await User.findOne({ email });
 
@@ -47,6 +52,7 @@ const resolvers = {
       const token = signToken(user);
       return { token, user };
     },
+    // tested: works
     createProfile: async (parent, { _id, name }) => {
       const user = await User.findByIdAndUpdate(
         { _id },
@@ -55,6 +61,7 @@ const resolvers = {
       );
       return user;
     },
+    // tested: works
     setPin: async (parent, { _id, pin }) => {
       const user = await User.findByIdAndUpdate(
         { _id },
@@ -63,21 +70,27 @@ const resolvers = {
       );
       return user;
     },
+    // tested: works
     setAdmin: async (parent, { _id, name }) => {
-      const user = await User.findById(_id, function (err, user) {
-        const oldProf = user.profiles.find((prof) => prof.isAdmin == true);
-        if (oldProf) {
-          oldProf.isAdmin = false;
-          user.save();
-        }
-
-        const profile = user.profiles.find((prof) => prof.name == name);
-        profile.isAdmin = true;
-        user.save();
-      });
+      await User.findOneAndUpdate(
+        { _id: _id, "profiles.isAdmin" : true },
+        { $set: {
+          "profiles.$.isAdmin" : false
+        } },
+        { new: true }
+      );
+      const user = await User.findOneAndUpdate(
+        { _id: _id, "profiles.name": name },
+        { $set: {
+          "profiles.$.isAdmin" : true
+        }},
+        { new: true }
+      );
+      return user;
     },
-  },
-  ChoreMutation: {
+
+    // Chore Mutations
+    //tested: works
     createChore: async (parent, { _id, name, description, points }) => {
       const chore = await Chore.create({
         name: name,
@@ -108,6 +121,7 @@ const resolvers = {
       await Chore.findOneAndDelete({ _id: _idChore });
       return list;
     },
+    // tested: works
     createList: async (parent, { _idAdmin, name }) => {
       const list = await List.create({
         name: name,
@@ -119,8 +133,8 @@ const resolvers = {
     deleteList: async (parent, { _id }) => {
       const list = await List.findOneAndDelete({ _id: _id });
     },
-  },
-  RewardMutation: {
+
+    // Reward Mutations
     createReward: async (parent, { _idAdmin, name, cost }) => {
       const reward = await Reward.create({
         name: name,
@@ -141,6 +155,7 @@ const resolvers = {
       await Reward.findOneAndDelete({ _id: _id });
     },
   },
+
 };
 
 module.exports = resolvers;
