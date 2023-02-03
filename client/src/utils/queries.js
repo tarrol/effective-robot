@@ -31,7 +31,22 @@ export const QUERY_LIST = gql`
   }
 `;
 
-export const QUERY_REWARD = gql`
+export const QUERY_MYLISTS = gql`
+query MyLists($id: String!) {
+  myLists(_id: $id) {
+    _id
+    name
+    chores {
+      _id
+      description
+      name
+      points
+    }
+  }
+}
+`;
+
+export const QUERY_MYREWARDS = gql`
   query reward($_id: String) {
     reward(_id: $_id) {
       _id

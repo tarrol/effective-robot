@@ -38,12 +38,14 @@ const typeDefs = gql`
     _id: ID!
     name: String!
     cost: Int
+    admin: ID!
   }
 
   type Query {
     me: User
     list(_id: String): [List]
-    reward(_id: String): [Reward]
+    myLists(_id: String!): [List]
+    reward(_id: String!): [Reward]
   }
 
   type Mutation {

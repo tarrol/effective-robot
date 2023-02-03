@@ -10,13 +10,18 @@ const resolvers = {
       }
       throw new AuthenticationError("You need to be logged in!");
     },
+    // lists by list id
     list: async (parent, { _id }) => {
       const params = _id ? { _id } : {};
-      return List.find(params);
+      return await List.find(params);
     },
+    // lists by user id
+    myLists: async (parent, { _id }) => {
+      return await List.find({admin: _id});
+    },
+    // lists by user id
     reward: async (parent, { _id }) => {
-      const params = _id ? { _id } : {};
-      return Reward.find(params);
+      return await Reward.find({admin: _id});
     },
   },
   Mutation: {
