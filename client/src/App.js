@@ -15,7 +15,7 @@ const httpLink = createHttpLink({
 const authLink = setContext((_, { headers }) => {
   const token = localStorage.getItem("auth_token");
 
-  console.log(token);
+  // console.log(token);
   
   return {
     headers: {
@@ -32,15 +32,16 @@ const client = new ApolloClient({
 
 function App() {
   const [currentTab, setCurrentTab] = useState("home"); // Initial value set to "home"
+  const [isLoggedIn, setIsLoggedIn] = React.useState(false);
 
   const renderTab = () => {
     switch (currentTab) {
       case "home":
         return <Home />;
       case "login":
-        return <Login />;
+        return <Login isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />;
       case "register":
-        return <Register/>;
+        return <Register isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />;
       default:
         return null;
     }
@@ -50,7 +51,9 @@ function App() {
     <ApolloProvider client={client}>
     <div>
       <div className="mobile-header">
-        <Header currentTab={currentTab} setCurrentTab={setCurrentTab}></Header>
+        <Header currentTab={currentTab} setCurrentTab={setCurrentTab}
+                isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} > 
+        </Header>
       </div>
       <div>
         <main>{renderTab()}</main>

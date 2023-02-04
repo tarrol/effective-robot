@@ -1,8 +1,8 @@
 import React from "react";
 import Navigation from "../Navigation";
 
-function Header(props) {
-  const { currentTab, setCurrentTab } = props;
+function Header({currentTab, setCurrentTab, isLoggedIn, setIsLoggedIn }) {
+  // const { currentTab, setCurrentTab } = props;
 
   return (
     <header>
@@ -13,6 +13,8 @@ function Header(props) {
         <Navigation
           currentTab={currentTab}
           setCurrentTab={setCurrentTab}
+          isLoggedIn={isLoggedIn}
+          setIsLoggedIn={setIsLoggedIn}
         ></Navigation>
       </div>
     </header>

@@ -3,7 +3,7 @@ import { useMutation } from "@apollo/client";
 import { FaSignInAlt } from "react-icons/fa";
 import { LOGIN_USER } from "../../utils/mutations";
 
-function Login() {
+function Login({ isLoggedIn, setIsLoggedIn }) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
@@ -28,6 +28,7 @@ function Login() {
       localStorage.setItem("token", data.login.token);
       setError("");
       setSuccess("Login Successful!");
+      setIsLoggedIn(true);
     } catch (error) {
       setError("Incorrect email or password");
       setSuccess("");

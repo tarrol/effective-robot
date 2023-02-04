@@ -1,8 +1,8 @@
 import React from "react";
 
-function Navigation(props) {
-  const { currentTab, setCurrentTab } = props;
-  const [isLoggedIn, setIsLoggedIn] = React.useState(false);
+function Navigation({currentTab, setCurrentTab, isLoggedIn, setIsLoggedIn }) {
+  // const { currentTab, setCurrentTab } = props;
+  // const [isLoggedIn, setIsLoggedIn] = React.useState(false);
 
   return (
     <nav>
