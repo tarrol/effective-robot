@@ -1,4 +1,5 @@
 const { Schema, model } = require("mongoose");
+const { Chore } = require(".");
 
 const choreSchema = new Schema({
   name: {
@@ -15,6 +16,14 @@ const choreSchema = new Schema({
     type: Number,
     default: 0,
   },
+  flavorText: {
+    type: String,
+    default: "",
+  },
+  listId: {
+    type: Schema.Types.ObjectId,
+    ref: "List"
+  }
 });
 
 const listSchema = new Schema({
@@ -31,6 +40,7 @@ const listSchema = new Schema({
     ref: "User",
   },
 });
+
 
 module.exports = {
   Chore: model("Chore", choreSchema),

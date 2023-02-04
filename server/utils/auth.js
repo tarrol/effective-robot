@@ -1,6 +1,6 @@
 const jwt = require("jsonwebtoken");
 
-const secret = process.env.SECRET;
+const secret = "dhg7u9q6b91264ercx2ynx729o6e2";
 
 module.exports = {
   authMiddleware: function ({ req }) {

@@ -15,6 +15,11 @@ function Navigation(props) {
             <span onClick={() => setCurrentTab("game")}>Game</span>
           </li>
         )}
+        {isLoggedIn && (
+          <li className={currentTab === "profile" ? "mx-2 navActive" : "mx-2"}>
+            <span onClick={() => setCurrentTab("profile")}>profile</span>
+          </li>
+        )}
         <li className={currentTab === "login" ? "mx-2 navActive" : "mx-2"}>
           <span onClick={() => setCurrentTab("login")}>Login</span>
         </li>

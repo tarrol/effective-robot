@@ -1,13 +1,14 @@
-import React, { useState } from 'react';
-import { useMutation } from '@apollo/client';
-import { REGISTER_USER } from '../../utils/mutations'
+import React, { useState } from "react";
+import { useMutation } from "@apollo/client";
+import { REGISTER_USER } from "../../utils/mutations";
+import { FaUser } from "react-icons/fa";
 
 function Register() {
-  const [username, setUsername] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
-  const [error, setError] = useState('');
+  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [error, setError] = useState("");
 
   const [registerUser, { _error }] = useMutation(REGISTER_USER);
 
@@ -32,7 +33,7 @@ function Register() {
 
     // Validate the input values and perform registration here
     if (password !== confirmPassword) {
-      setError('Passwords do not match');
+      setError("Passwords do not match");
       return;
     }
 
@@ -55,55 +56,68 @@ function Register() {
       //   setError(result.error);
       // }
       const { data } = await registerUser({
-        variables: { name: username, email: email, password: password }
+        variables: { name: username, email: email, password: password },
       });
       console.log(data);
     } catch (error) {
-      setError('Error while registering user');
+      setError("Error while registering user");
       console.error(error);
     }
   }
 
   return (
-    <form onSubmit={handleSubmit}>
-      {error && <div style={{ color: 'red' }}>{error}</div>}
-      <div>
-        <label htmlFor="username">Username:</label>
+    <form onSubmit={handleSubmit} className="center">
+      {error && <div style={{ color: "red" }}>{error}</div>}
+
+      <div className="center">
+        <h1>
+          <FaUser /> Register
+        </h1>
+        <p>Please create an account</p>
+      </div>
+      <div className="form-group">
+        <label htmlFor="username"></label>
         <input
           type="text"
           id="username"
           value={username}
+          placeholder="Enter your username  "
           onChange={handleUsernameChange}
         />
       </div>
-      <div>
-        <label htmlFor="email">Email:</label>
+      <div className="form-group">
+        <label htmlFor="email"></label>
         <input
           type="email"
           id="email"
+          placeholder="Enter your email"
           value={email}
           onChange={handleEmailChange}
         />
       </div>
-      <div>
-        <label htmlFor="password">Password:</label>
+      <div className="form-group">
+        <label htmlFor="password"></label>
         <input
           type="password"
           id="password"
+          placeholder="Enter your password  "
           value={password}
           onChange={handlePasswordChange}
         />
       </div>
-      <div>
-        <label htmlFor="confirmPassword">Confirm Password:</label>
+      <div className="form-group">
+        <label htmlFor="confirmPassword"></label>
         <input
           type="password"
           id="confirmPassword"
+          placeholder="Confirm password"
           value={confirmPassword}
           onChange={handleConfirmPasswordChange}
         />
       </div>
-      <button type="submit">Sign Up</button>
+      <button className="register-button" type="submit">
+        Sign Up
+      </button>
     </form>
   );
 }

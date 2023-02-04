@@ -1,7 +1,7 @@
 import { gql } from "@apollo/client";
 
 export const REGISTER_USER = gql`
-mutation Register($email: String!, $password: String!, $name: String!) {
+mutation register($email: String!, $password: String!, $name: String!) {
   register(email: $email, password: $password, name: $name) {
     user {
       name
@@ -31,18 +31,16 @@ export const LOGIN_USER = gql`
 `;
 
 export const CREATE_PROFILE = gql`
-  mutation createProfile($_id: String!, $name: String!) {
-    createProfile(_id: $_id, name: $name) {
-      _id
+mutation CreateProfile($id: String!, $name: String!) {
+  createProfile(_id: $id, name: $name) {
+    _id
+    name
+    profiles {
+      isAdmin
       name
-      email
-      password
-      profiles {
-        name
-        isAdmin
-      }
     }
   }
+}
 `;
 
 export const SET_PIN = gql`
@@ -54,12 +52,13 @@ export const SET_PIN = gql`
   }
 `
 export const SET_ADMIN = gql`
-  mutation setAdmin($_id: String!, $name: String!) {
-    setAdmin(_id: $_id, name: $name)
+mutation SetAdmin($id: String!, $name: String!) {
+  setAdmin(_id: $id, name: $name) {
     _id
     profiles {
       name
       isAdmin
     }
   }
+}
 `
