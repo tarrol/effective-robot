@@ -8,7 +8,7 @@ const ProfileList = ({ userData, setSelectedProfile }) => {
             {userData.profiles.map(profile => (
                 <li
                   key={profile.name}
-                  onClick={setSelectedProfile(profile.name)}
+                  onClick={() => setSelectedProfile(profile.name)}
                 >
                   {profile.name}
                 </li>

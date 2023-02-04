@@ -19,6 +19,10 @@ const LoginPage = ({ isLoggedIn }) => {
   }
   const [CreateProfile, { error }] = useMutation(CREATE_PROFILE);
 
+  const SelectProfile = (name) => {
+    setSelectedProfile(name);
+  }
+
 
   // const handleLogin = () => {
   //   setIsLoggedIn(true);
@@ -84,7 +88,7 @@ const LoginPage = ({ isLoggedIn }) => {
             userData.me.profiles ? (
               <ProfileList 
               userData={userData.me} 
-              setSelectedProfile={setSelectedProfile} 
+              setSelectedProfile={SelectProfile} 
               />
             ) : (
               <div></div>
@@ -130,6 +134,7 @@ const LoginPage = ({ isLoggedIn }) => {
 //   }
 
 return (
+  // users name, completed previously, and coins, and way to change profile
   <div>
     <h1>Welcome to the Chores Game, {selectedProfile}</h1>
     {selectedProfile.isAdmin ? (
