@@ -32,13 +32,13 @@ const resolvers = {
         name: name,
         isAdmin: true,
       });
-      const updatedUser = await User.findByIdAndUpdate(
-        { _id: user._id },
-        { $push: { profiles: { name: user.name, isAdmin: false } } },
-        { new: true } 
-      )
-      const token = signToken(updatedUser);
-      return { token, updatedUser };
+      // const updatedUser = await User.findByIdAndUpdate(
+      //   { _id: user._id },
+      //   { $push: { profiles: { name: user.name, isAdmin: false } } },
+      //   { new: true } 
+      // )
+      const token = signToken(user);
+      return { token, user };
     },
     // tested: works
     login: async (parent, { email, password }) => {

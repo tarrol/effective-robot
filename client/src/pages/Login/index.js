@@ -25,7 +25,7 @@ function Login({ isLoggedIn, setIsLoggedIn, setCurrentTab }) {
       const { data } = await loginUser({
         variables: { email: username, password }
       });
-      localStorage.setItem("token", data.login.token);
+      localStorage.setItem("auth_token", data.login.token);
       setError("");
       setSuccess("Login Successful!");
       setIsLoggedIn(true);
