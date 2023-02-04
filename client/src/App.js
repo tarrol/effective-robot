@@ -5,6 +5,8 @@ import Footer from "./pages/Footer";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Register from "./pages/Register/index";
+import Profile from "./pages/Profile";
+import Game from "./pages/Game";
 import { setContext } from "@apollo/client/link/context";
 import { ApolloClient, ApolloProvider, InMemoryCache, createHttpLink, } from '@apollo/client';
 
@@ -39,9 +41,13 @@ function App() {
       case "home":
         return <Home />;
       case "login":
-        return <Login isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />;
+        return <Login isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} setCurrentTab={setCurrentTab} />;
       case "register":
-        return <Register isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />;
+        return <Register isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} setCurrentTab={setCurrentTab} />;
+      case "profile":
+        return <Profile isLoggedIn={isLoggedIn} />;
+      case "game":
+        return <Game isLoggedIn={isLoggedIn} />;
       default:
         return null;
     }

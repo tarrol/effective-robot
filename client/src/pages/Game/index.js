@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import axios from 'axios';
 
-const ProtectedPage = () => {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+const ProtectedPage = ({ isLoggedIn }) => {
+  // const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [data, setData] = useState([]);
 
   useEffect(() => {
@@ -16,9 +16,9 @@ const ProtectedPage = () => {
     }
   }, [isLoggedIn]);
 
-  if (!isLoggedIn) {
-    return <button onClick={() => setIsLoggedIn(true)}>Login</button>;
-  }
+  // if (!isLoggedIn) {
+  //   return <button onClick={() => setIsLoggedIn(true)}>Login</button>;
+  // }
 
   return (
     <div>

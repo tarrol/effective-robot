@@ -3,7 +3,7 @@ import { useMutation } from "@apollo/client";
 import { REGISTER_USER } from "../../utils/mutations";
 import { FaUser } from "react-icons/fa";
 
-function Register({ isLoggedIn, setIsLoggedIn }) {
+function Register({ isLoggedIn, setIsLoggedIn, setCurrentTab }) {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -59,6 +59,7 @@ function Register({ isLoggedIn, setIsLoggedIn }) {
         variables: { name: username, email: email, password: password },
       });
       setIsLoggedIn(true);
+      setCurrentTab('profile');
     } catch (error) {
       setError("Error while registering user");
       console.error(error);

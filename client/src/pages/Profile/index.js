@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from "react";
 
-const LoginPage = () => {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+const LoginPage = ({ isLoggedIn }) => {
+  // const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [profiles, setProfiles] = useState([]);
   const [selectedProfile, setSelectedProfile] = useState(null);
   const [isAdmin, setIsAdmin] = useState(false);
 
-  const handleLogin = () => {
-    setIsLoggedIn(true);
-  };
+  // const handleLogin = () => {
+  //   setIsLoggedIn(true);
+  // };
 
   const handleCreateProfile = (profileName) => {
     setProfiles([...profiles, { name: profileName, isLoggedIn: false }]);
@@ -41,14 +41,14 @@ const LoginPage = () => {
     setIsAdmin(true);
   };
 
-  if (!isLoggedIn) {
-    return (
-      <div>
-        <h1>Please login</h1>
-        <button onClick={handleLogin}>Login</button>
-      </div>
-    );
-  }
+  // if (!isLoggedIn) {
+  //   return (
+  //     <div>
+  //       <h1>Please login</h1>
+  //       <button onClick={handleLogin}>Login</button>
+  //     </div>
+  //   );
+  // }
 
   if (!selectedProfile) {
     return (
