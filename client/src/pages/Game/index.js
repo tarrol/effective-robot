@@ -8,12 +8,13 @@ const ProtectedPage = ({ isLoggedIn, selectedProfile, isAdmin }) => {
   const [data, setData] = useState([]);
   const [selectedList, setList] = useState(null);
 
+  const [formListName, setListName] = useState("");
+
   const { data: userData, refetch: refetchUser } = useQuery(QUERY_ME);
   const id = userData?.me._id;
   const { loading, data: listData, refetch: refetchList } 
     = useQuery(QUERY_MYLISTS, { variables: { id } } );
 
-  console.log(listData);
 
   // useEffect(() => {
   //   const fetchData = async () => {
@@ -30,8 +31,15 @@ const ProtectedPage = ({ isLoggedIn, selectedProfile, isAdmin }) => {
   //   return <button onClick={() => setIsLoggedIn(true)}>Login</button>;
   // }
 
-  const HandleListSelect = (listName) => {
-    setList(listName);
+  const HandleListSelect = (listName, index) => {
+    setList({'listName': listName, 'index': index});
+  };
+  const handleListNameChange = (e) => {
+    const { value } = e.target;
+    setListName(value);
+  };
+  const handleListFormSubmit = async (event) => {
+    event.preventDefault();
   }
 
   if (loading) {
@@ -51,12 +59,29 @@ const ProtectedPage = ({ isLoggedIn, selectedProfile, isAdmin }) => {
 
         <ul>
           {listData.myLists.map((list, index) => (
-            <li key={list._id} onClick={() => HandleListSelect(list.name) }>
+            <li key={index} onClick={() => HandleListSelect(list.name, index) }>
               {list.name} 
               <a>Select</a>
             </li>
           ))}
         </ul>
+        { isAdmin ? (
+          <form>
+            <h2>Create a new List</h2>
+            <div>
+              <h3>List Name</h3>
+              <input 
+                type="text"
+                placeholder="Enter profile name"
+                value={formListName}
+                onChange={handleListNameChange}
+              />
+            </div>
+            <button type="submit" onClick={handleListFormSubmit}>Submit</button>
+          </form>
+        ) : (
+          <div></div>
+        )}
         
       </div>
     )
@@ -66,9 +91,9 @@ const ProtectedPage = ({ isLoggedIn, selectedProfile, isAdmin }) => {
     <div>
       Welcome to the Chores Game
       {/* <EndpointBox endpoint='<API_ENDPOINT>' /> */}
-      <h1>{listData.myLists[0].name}</h1>
+      <h1>{listData.myLists[selectedList.index].name}</h1>
       <ul>
-        {listData.myLists[0].chores.map(item => (
+        {listData.myLists[selectedList.index].chores.map(item => (
           <li key={item._id}>{item.name}</li>
         ))}
       </ul>
