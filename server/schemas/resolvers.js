@@ -23,6 +23,7 @@ const resolvers = {
     reward: async (parent, { _id }) => {
       return await Reward.find({admin: _id});
     },
+    // data.getAdmin.profiles.name to get name of admin
     getAdmin: async (parent, { _id }) => {
       return await User.findOne(
         { _id: _id, "profiles.isAdmin": true }, 
@@ -38,11 +39,6 @@ const resolvers = {
         name: name,
         isAdmin: true,
       });
-      // const updatedUser = await User.findByIdAndUpdate(
-      //   { _id: user._id },
-      //   { $push: { profiles: { name: user.name, isAdmin: false } } },
-      //   { new: true } 
-      // )
       const token = signToken(user);
       return { token, user };
     },

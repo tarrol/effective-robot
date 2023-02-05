@@ -5,8 +5,7 @@ import { useMutation, useQuery } from '@apollo/client';
 import ProfileList from "../components/ProfileList";
 
 const LoginPage = ({ isLoggedIn }) => {
-  // const [isLoggedIn, setIsLoggedIn] = useState(false);
-  // const [profiles, setProfiles] = useState([]);
+
   const [selectedProfile, setSelectedProfile] = useState(null);
   const [isAdmin, setIsAdmin] = useState(false);
 
@@ -14,8 +13,8 @@ const LoginPage = ({ isLoggedIn }) => {
   const [formPIN, setFormPIN] = useState("");
 
   const { loading, data: userData, refetch: refetchUser } = useQuery(QUERY_ME);
-  const { data: adminName, refetch: refetchAdmin } = useQuery(QUERY_GETADMIN);
-
+  const id = userData?.me._id;
+  const { data: adminName, refetch: refetchAdmin } = useQuery(QUERY_GETADMIN, { variables: { id } });
   const GetProfiles = () => {
     refetchUser();
     refetchAdmin();
@@ -27,6 +26,12 @@ const LoginPage = ({ isLoggedIn }) => {
 
   const SelectProfile = (name) => {
     setSelectedProfile(name);
+    if (adminName.getAdmin.profiles[0].name == name)
+    {
+      setIsAdmin(true);
+    } else {
+      setIsAdmin(false);
+    }
   }
 
 
@@ -62,6 +67,12 @@ const LoginPage = ({ isLoggedIn }) => {
         name: profileName
       }
     });
+
+    if (selectedProfile != profileName)
+    {
+      setIsAdmin(false);
+      refetchAdmin();
+    }
   };
 
   if (!isLoggedIn) {
@@ -135,6 +146,8 @@ const LoginPage = ({ isLoggedIn }) => {
                 <ProfileList 
                 userData={userData.me} 
                 setSelectedProfile={SelectProfile} 
+                isAdmin={isAdmin}
+                handleMakeAdmin={handleMakeAdmin}
                 />
               ) : (
                 <div></div>
@@ -175,7 +188,7 @@ const LoginPage = ({ isLoggedIn }) => {
               value={formPIN}
               onChange={handlePINChange}
             />
-            <button type="submit" onClick={handleFormSubmit}></button>
+            <button type="submit" onClick={handleFormSubmit}>Submit</button>
           </form>
         </div>
       )
@@ -186,8 +199,8 @@ const LoginPage = ({ isLoggedIn }) => {
     return (
       // users name, completed previously, and coins, and way to change profile
       <div>
-        <h1>Welcome to the Chores Game, {selectedProfile}</h1>
-        {selectedProfile.isAdmin ? (
+        {/* <h1>Welcome to the Chores Game, {selectedProfile}</h1>
+        { isAdmin ? (
           <div>
             <h2>Admin controls</h2>
             <ul>
@@ -209,7 +222,14 @@ const LoginPage = ({ isLoggedIn }) => {
           <div>
             <h2>Enjoy the game!</h2>
           </div>
-        )}
+        )} */}
+        <h1>Welcome to the Chores Game, {selectedProfile}</h1>
+        <ProfileList 
+                userData={userData.me} 
+                setSelectedProfile={SelectProfile} 
+                isAdmin={isAdmin}
+                handleMakeAdmin={handleMakeAdmin}
+        />
       </div>
     );
 
