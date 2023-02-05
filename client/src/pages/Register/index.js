@@ -58,6 +58,7 @@ function Register({ isLoggedIn, setIsLoggedIn, setCurrentTab }) {
       const { data } = await registerUser({
         variables: { name: username, email: email, password: password },
       });
+      localStorage.setItem("auth_token", data.register.token);
       setIsLoggedIn(true);
       setCurrentTab('profile');
     } catch (error) {

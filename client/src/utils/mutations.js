@@ -44,12 +44,15 @@ mutation CreateProfile($id: String!, $name: String!) {
 `;
 
 export const SET_PIN = gql`
-  mutation setPin($_id: String!, $name: String!) {
-    setPin(_id: $_id, name: $name) {
-      _id
-      pin
-    }
+mutation SetPin($id: String!, $pin: String!) {
+  setPin(_id: $id, pin: $pin) {
+    _id
+    email
+    name
+    password
+    pin
   }
+}
 `
 export const SET_ADMIN = gql`
 mutation SetAdmin($id: String!, $name: String!) {
