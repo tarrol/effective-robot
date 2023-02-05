@@ -38,6 +38,7 @@ mutation CreateProfile($id: String!, $name: String!) {
     profiles {
       isAdmin
       name
+      points
     }
   }
 }
@@ -65,3 +66,4 @@ mutation SetAdmin($id: String!, $name: String!) {
   }
 }
 `
+

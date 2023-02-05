@@ -1,5 +1,5 @@
 const { Schema, model } = require("mongoose");
-const { Chore } = require(".");
+// const { Chore } = require(".");
 
 const choreSchema = new Schema({
   name: {
@@ -23,6 +23,10 @@ const choreSchema = new Schema({
   listId: {
     type: Schema.Types.ObjectId,
     ref: "List"
+  },
+  isComplete: {
+    type: Boolean,
+    default: false
   }
 });
 

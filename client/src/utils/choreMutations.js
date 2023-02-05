@@ -10,20 +10,22 @@ mutation CreateChore($id: String!, $name: String!, $description: String, $points
       name
       points
       flavorText
+      isComplete
     }
   }
 }
 `;
 
 export const UPDATE_CHORE = gql`
-mutation UpdateChore($id: String!, $idChore: String!, $name: String!, $description: String!, $points: String!, $flavorText: String!) {
-  updateChore(_id: $id, _idChore: $idChore, name: $name, description: $description, points: $points, flavorText: $flavorText) {
+mutation UpdateChore($id: String!, $idChore: String!, $name: String!, $description: String!, $points: String!, $flavorText: String!, $isComplete: Boolean!) {
+  updateChore(_id: $id, _idChore: $idChore, name: $name, description: $description, points: $points, flavorText: $flavorText, isComplete: $isComplete) {
     chores {
       _id
       description
       name
       points
       flavorText
+      isComplete
     }
   }
 }

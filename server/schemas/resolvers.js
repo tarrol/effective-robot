@@ -38,6 +38,7 @@ const resolvers = {
       user.profiles.push({
         name: name,
         isAdmin: true,
+        points: 0
       });
       const token = signToken(user);
       return { token, user };
@@ -63,7 +64,7 @@ const resolvers = {
     createProfile: async (parent, { _id, name }) => {
       const user = await User.findByIdAndUpdate(
         { _id },
-        { $push: { profiles: { name: name, isAdmin: false } } },
+        { $push: { profiles: { name: name, isAdmin: false, points: 0 } } },
         { new: true }
       );
       return user;
@@ -104,7 +105,8 @@ const resolvers = {
         description: description,
         points: points,
         listId: _id,
-        flavorText: flavorText
+        flavorText: flavorText,
+        isComplete: false
       });
       const list = await List.findByIdAndUpdate(
         { _id },
@@ -114,10 +116,10 @@ const resolvers = {
       return list;
     },
     // tested: works
-    updateChore: async (parent, { _id, _idChore, name, description, points, flavorText }) => {
+    updateChore: async (parent, { _id, _idChore, name, description, points, flavorText, isComplete }) => {
       const chore = await Chore.findOneAndUpdate(
         { _id: _idChore },
-        { name: name, description: description, points: points, flavorText: flavorText },
+        { name: name, description: description, points: points, flavorText: flavorText, isComplete: isComplete },
         { new: true }
       );
       const list = await List.findOneAndUpdate(
@@ -125,7 +127,9 @@ const resolvers = {
         { $set: {
           "chores.$.name": name,
           "chores.$.description" : description,
-          "chores.$.points": points
+          "chores.$.points": points,
+          "chores.$.flavorText": flavorText,
+          "chores.$.isComplete": isComplete
         } },
         { new: true }
       )

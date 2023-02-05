@@ -11,6 +11,7 @@ export const QUERY_ME = gql`
       profiles {
         name
         isAdmin
+        points
       }
     }
   }

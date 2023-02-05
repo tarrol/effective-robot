@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { QUERY_MYLISTS, QUERY_ME } from "../../utils/queries";
-import { CREATE_LIST, CREATE_CHORE } from "../../utils/choreMutations";
+import { CREATE_LIST, CREATE_CHORE, UPDATE_CHORE } from "../../utils/choreMutations";
 import axios from 'axios';
 import { useQuery, useMutation } from "@apollo/client";
 
@@ -16,6 +16,7 @@ const ProtectedPage = ({ isLoggedIn, selectedProfile, isAdmin }) => {
 
   const [CreateList] = useMutation(CREATE_LIST);
   const [CreateChore] = useMutation(CREATE_CHORE);
+  const [UpdateChore] = useMutation(UPDATE_CHORE);
 
   const { data: userData, refetch: refetchUser } = useQuery(QUERY_ME);
   const id = userData?.me._id;
@@ -87,6 +88,23 @@ const ProtectedPage = ({ isLoggedIn, selectedProfile, isAdmin }) => {
     refetchList();
   }
 
+  const finishChore = async (chore) => {
+    await UpdateChore({
+      variables: {
+        id: chore._id,
+        name: chore.name,
+        description: chore.description,
+        points: chore.points,
+        flavorText: chore.flavorText,
+        isComplete: true
+      }
+    });
+
+    
+  }
+
+
+
   if (loading) {
     return (
       <div>...Loading</div>
@@ -139,7 +157,14 @@ const ProtectedPage = ({ isLoggedIn, selectedProfile, isAdmin }) => {
       <h1>{listData.myLists[selectedList.index].name}</h1>
       <ul>
         {listData.myLists[selectedList.index].chores.map(item => (
-          <li key={item._id}>{item.name}</li>
+          <li key={item._id}>
+            <p>{item.name}</p>
+            {item.isComplete ? (
+              <p>Completed</p>
+            ): (
+              <p onClick={() => finishChore(item)}>Click to Complete</p>
+            )}
+          </li>
         ))}
       </ul>
       { isAdmin ? (
