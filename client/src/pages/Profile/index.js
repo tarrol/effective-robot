@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { QUERY_ME } from "../../utils/queries"
+import { QUERY_ME, QUERY_GETADMIN } from "../../utils/queries"
 import { CREATE_PROFILE, SET_ADMIN, SET_PIN } from "../../utils/mutations";
 import { useMutation, useQuery } from '@apollo/client';
 import ProfileList from "../components/ProfileList";
@@ -14,9 +14,11 @@ const LoginPage = ({ isLoggedIn }) => {
   const [formPIN, setFormPIN] = useState("");
 
   const { loading, data: userData, refetch: refetchUser } = useQuery(QUERY_ME);
+  const { data: adminName, refetch: refetchAdmin } = useQuery(QUERY_GETADMIN);
 
   const GetProfiles = () => {
     refetchUser();
+    refetchAdmin();
 
   }
   const [CreateProfile, { error }] = useMutation(CREATE_PROFILE);
@@ -35,11 +37,9 @@ const LoginPage = ({ isLoggedIn }) => {
         name: profileName
       },
     });
-    console.log(newProfiles);
     GetProfiles();
-    // setProfiles([...profiles, { name: profileName, isLoggedIn: false }]);
-    // setSelectedProfile(newProfiles.);
-    // setSelectedProfile(newProfiles[newProfiles.length - 1]);
+    setSelectedProfile(newProfiles.data.createProfile.profiles[
+      newProfiles.data.createProfile.profiles.length - 1].name);
   };
 
   // const handleSelectProfile = (profileName) => {
@@ -55,27 +55,22 @@ const LoginPage = ({ isLoggedIn }) => {
   //   setSelectedProfile(profileName);
   // };
 
-  // const handleMakeAdmin = (profileName) => {
-  //   const updatedProfiles = profiles.map(profile => {
-  //     if (profile.name === profileName) {
-  //       profile.isAdmin = true;
-  //     } else {
-  //       profile.isAdmin = false;
-  //     }
-  //     return profile;
-  //   });
-  //   setProfiles(updatedProfiles);
-  //   setIsAdmin(true);
-  // };
+  const handleMakeAdmin = async (profileName) => {
+    await SetAdmin({
+      variables: {
+        id: userData.me._id,
+        name: profileName
+      }
+    });
+  };
 
-  // if (!isLoggedIn) {
-  //   return (
-  //     <div>
-  //       <h1>Please login</h1>
-  //       <button onClick={handleLogin}>Login</button>
-  //     </div>
-  //   );
-  // }
+  if (!isLoggedIn) {
+    return (
+      <div>
+        <h1>Please login</h1>
+      </div>
+    );
+  }
 
   const handleNameChange = (e) => {
     const { value } = e.target;
@@ -110,7 +105,7 @@ const LoginPage = ({ isLoggedIn }) => {
     });
 
     setSelectedProfile(formName);
-
+    setIsAdmin(true);
     GetProfiles();
   };
 
@@ -152,6 +147,7 @@ const LoginPage = ({ isLoggedIn }) => {
             onKeyPress={event => {
               if (event.key === 'Enter') {
                 handleCreateProfile(event.target.value);
+                event.target.value="";
               }
             }}
           />
@@ -199,7 +195,7 @@ const LoginPage = ({ isLoggedIn }) => {
                 <li key={profile.name}>
                   {profile.name}
                   {!profile.isAdmin ? (
-                    <button /*onClick={() => handleMakeAdmin(profile.name)}*/>
+                    <button onClick={() => handleMakeAdmin(profile.name)}>
                       Make admin
                     </button>
                   ) : (

@@ -23,6 +23,12 @@ const resolvers = {
     reward: async (parent, { _id }) => {
       return await Reward.find({admin: _id});
     },
+    getAdmin: async (parent, { _id }) => {
+      return await User.findOne(
+        { _id: _id, "profiles.isAdmin": true }, 
+        { "profiles.$": 1 }
+      );
+    }
   },
   Mutation: {
     // tested: works

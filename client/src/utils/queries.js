@@ -58,3 +58,14 @@ export const QUERY_MYREWARDS = gql`
   }
 `;
 
+export const QUERY_GETADMIN = gql`
+query Query($id: String!) {
+  getAdmin(_id: $id) {
+    profiles {
+      isAdmin
+      name
+    }
+  }
+}
+`;
+

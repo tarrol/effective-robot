@@ -47,6 +47,7 @@ const typeDefs = gql`
     list(_id: String): [List]
     myLists(_id: String!): [List]
     reward(_id: String!): [Reward]
+    getAdmin(_id: String!): User
   }
 
   type Mutation {
