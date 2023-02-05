@@ -97,10 +97,16 @@ const resolvers = {
       return user;
     },
     updateProfilePoints: async (parent, {_id, name, points}) => {
+      const pointUser = await User.findOne(
+        { _id: _id, "profiles.name": name }, 
+        { "profiles.$": 1 }
+      );
+      let pointInt = parseInt(pointUser.profiles[0].points);
+      let newPoints = pointInt + parseInt(points);
       const user = User.findOneAndUpdate(
         { _id: _id, "profiles.name": name},
         { $set: {
-          "profiles.$.points": points
+          "profiles.$.points": newPoints
         } },
         { new: true }
       );

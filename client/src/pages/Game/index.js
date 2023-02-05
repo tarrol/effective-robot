@@ -41,6 +41,19 @@ const ProtectedPage = ({ isLoggedIn, selectedProfile, isAdmin }) => {
   //   return <button onClick={() => setIsLoggedIn(true)}>Login</button>;
   // }
 
+  const GetProfilePoints = (name) => {
+    if (!userData.me) {
+      return "";
+    }
+    for (let i = 0; i < userData.me.profiles.length; i++) {
+      if (userData.me.profiles[i].name == name)
+      {
+        return userData.me.profiles[i].points;
+      }
+    }
+    return "";
+  }
+
   const HandleListSelect = (listName, index) => {
     setList({'listName': listName, 'index': index});
   };
@@ -91,7 +104,6 @@ const ProtectedPage = ({ isLoggedIn, selectedProfile, isAdmin }) => {
   }
 
   const finishChore = async (chore) => {
-    console.log(chore);
     await UpdateChore({
       variables: {
         id: listData.myLists[selectedList.index]._id,
@@ -165,7 +177,7 @@ const ProtectedPage = ({ isLoggedIn, selectedProfile, isAdmin }) => {
 
   return (
     <div>
-      Welcome to the Chores Game
+      Welcome to the Chores Game {selectedProfile}. You have {GetProfilePoints(selectedProfile)} Points.
       {/* <EndpointBox endpoint='<API_ENDPOINT>' /> */}
       <h1>{listData.myLists[selectedList.index].name}</h1>
       <ul>

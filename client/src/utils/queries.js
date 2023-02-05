@@ -44,6 +44,7 @@ query MyLists($id: String!) {
       name
       points
       flavorText
+      isComplete
     }
   }
 }
