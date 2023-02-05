@@ -6,17 +6,18 @@ const apiKey = process.env.OPENAI_API_KEY;
 
 //Consider this the inputs passed through the function call, but defined here as though this is the 'input'
 const theme = 'pirate';
-const chore = 'Do the dishes';
+const chore = 'dust the living room';
 
 
 async function callGPT(chore, theme) {
   //Prompt function, so that it can pass the variables of 'chore' and 'theme' in a return() to chatGPT
-  const prompt = `Hello!`;
-  const url = 'https://api.openai.com/v1/engines/davinci/completions';
+  const prompt = `Write me a videogame style quest about the task "${chore}" as if it was written by a ${theme}.`;
+  const url = 'https://api.openai.com/v1/completions';
   const params = {
-    // "model": "text-davinci-003",
-    "prompt": generatePrompt(animal),
-    "temperature": 0.6,
+    "model": "text-davinci-003",
+    "prompt": `${prompt}`,
+    "max_tokens": 200,
+    "temperature": 0.6
   };
   const headers = {
     'Authorization': `Bearer ${apiKey}`,
