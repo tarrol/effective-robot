@@ -35,6 +35,8 @@ const client = new ApolloClient({
 function App() {
   const [currentTab, setCurrentTab] = useState("home"); // Initial value set to "home"
   const [isLoggedIn, setIsLoggedIn] = React.useState(false);
+  const [selectedProfile, setSelectedProfile] = useState(null);
+  const [isAdmin, setIsAdmin] = useState(false);
 
   const renderTab = () => {
     switch (currentTab) {
@@ -45,9 +47,19 @@ function App() {
       case "register":
         return <Register isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} setCurrentTab={setCurrentTab} />;
       case "profile":
-        return <Profile isLoggedIn={isLoggedIn} />;
+        return <Profile 
+          isLoggedIn={isLoggedIn} 
+          selectedProfile={selectedProfile}
+          setSelectedProfile={setSelectedProfile}
+          isAdmin={isAdmin}
+          setIsAdmin={setIsAdmin}
+         />;
       case "game":
-        return <Game isLoggedIn={isLoggedIn} />;
+        return <Game 
+          isLoggedIn={isLoggedIn} 
+          selectedProfile={selectedProfile}
+          isAdmin={isAdmin}
+        />;
       default:
         return null;
     }

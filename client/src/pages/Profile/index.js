@@ -4,10 +4,10 @@ import { CREATE_PROFILE, SET_ADMIN, SET_PIN } from "../../utils/mutations";
 import { useMutation, useQuery } from '@apollo/client';
 import ProfileList from "../components/ProfileList";
 
-const LoginPage = ({ isLoggedIn }) => {
+const LoginPage = ({ isLoggedIn, selectedProfile, setSelectedProfile, isAdmin, setIsAdmin }) => {
 
-  const [selectedProfile, setSelectedProfile] = useState(null);
-  const [isAdmin, setIsAdmin] = useState(false);
+  // const [selectedProfile, setSelectedProfile] = useState(null);
+  // const [isAdmin, setIsAdmin] = useState(false);
 
   const [formName, setFormName] = useState("");
   const [formPIN, setFormPIN] = useState("");
