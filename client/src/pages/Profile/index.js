@@ -231,6 +231,16 @@ const LoginPage = ({ isLoggedIn, selectedProfile, setSelectedProfile, isAdmin, s
                 isAdmin={isAdmin}
                 handleMakeAdmin={handleMakeAdmin}
         />
+        <input
+            type="text"
+            placeholder="Enter profile name"
+            onKeyPress={event => {
+              if (event.key === 'Enter') {
+                handleCreateProfile(event.target.value);
+                event.target.value="";
+              }
+            }}
+          />
       </div>
     );
 

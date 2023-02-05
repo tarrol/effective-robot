@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { QUERY_MYLISTS, QUERY_ME } from "../../utils/queries";
+import { CREATE_LIST, CREATE_CHORE } from "../../utils/choreMutations";
 import axios from 'axios';
-import { useQuery } from "@apollo/client";
+import { useQuery, useMutation } from "@apollo/client";
 
 const ProtectedPage = ({ isLoggedIn, selectedProfile, isAdmin }) => {
   // const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -9,6 +10,12 @@ const ProtectedPage = ({ isLoggedIn, selectedProfile, isAdmin }) => {
   const [selectedList, setList] = useState(null);
 
   const [formListName, setListName] = useState("");
+  const [formChoreName, setChoreName] = useState("");
+  const [formChoreDesc, setChoreDesc] = useState("");
+  const [formChorePoints, setChorePoints] = useState("");
+
+  const [CreateList] = useMutation(CREATE_LIST);
+  const [CreateChore] = useMutation(CREATE_CHORE);
 
   const { data: userData, refetch: refetchUser } = useQuery(QUERY_ME);
   const id = userData?.me._id;
@@ -40,6 +47,30 @@ const ProtectedPage = ({ isLoggedIn, selectedProfile, isAdmin }) => {
   };
   const handleListFormSubmit = async (event) => {
     event.preventDefault();
+
+    await CreateList({
+      variables: {
+        _idAdmin: id,
+        name: formListName
+      }
+    });
+    refetchList();
+  };
+
+  const handleChoreNameChange = (e) => {
+    const { value } = e.target;
+    setChoreName(value);
+  };
+  const handleChoreDescChange = (e) => {
+    const { value } = e.target;
+    setChoreDesc(value);
+  };
+  const handleChorePointsChange = (e) => {
+    const { value } = e.target;
+    setChorePoints(value);
+  };
+  const handleChoreFormSubmit = async (event) => {
+    // event.
   }
 
   if (loading) {
@@ -97,6 +128,42 @@ const ProtectedPage = ({ isLoggedIn, selectedProfile, isAdmin }) => {
           <li key={item._id}>{item.name}</li>
         ))}
       </ul>
+      { isAdmin ? (
+          <form>
+            <h2>Add a Chore to the List</h2>
+            <div>
+              <h3>New Chore Name</h3>
+              <input 
+                type="text"
+                placeholder="Enter profile name"
+                value={formChoreName}
+                onChange={handleChoreNameChange}
+              />
+            </div>
+            <div>
+              <h4>Description of the Chore</h4>
+              <input 
+                type="text"
+                placeholder="Enter profile name"
+                value={formChoreDesc}
+                onChange={handleChoreDescChange}
+              />
+            </div>
+            <div>
+              <p>How many rewards points is this Chore worth?</p>
+              <input 
+                type="text"
+                placeholder="Enter profile name"
+                value={formChorePoints}
+                onChange={handleChorePointsChange}
+              />
+            </div>
+            <button type="submit" onClick={handleChoreFormSubmit}>Submit</button>
+          </form>
+        ) : (
+          <div></div>
+        )}
+
     </div>
   );
 };
