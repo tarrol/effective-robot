@@ -14,7 +14,7 @@ async function callGPT(chore, theme) {
   const prompt = `Hello!`;
   const url = 'https://api.openai.com/v1/engines/davinci/completions';
   const params = {
-    "model": "text-davinci-003",
+    // "model": "text-davinci-003",
     "prompt": generatePrompt(animal),
     "temperature": 0.6,
   };
