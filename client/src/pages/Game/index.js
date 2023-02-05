@@ -70,7 +70,21 @@ const ProtectedPage = ({ isLoggedIn, selectedProfile, isAdmin }) => {
     setChorePoints(value);
   };
   const handleChoreFormSubmit = async (event) => {
-    // event.
+    event.preventDefault();
+
+    await CreateChore({
+      variables: {
+        id: listData.myLists[selectedList.index]._id,
+        name: formChoreName,
+        description: formChoreDesc,
+        points: formChorePoints,
+        flavorText: ""
+      }
+    });
+    setChoreName("");
+    setChoreDesc("");
+    setChorePoints("");
+    refetchList();
   }
 
   if (loading) {
@@ -103,7 +117,7 @@ const ProtectedPage = ({ isLoggedIn, selectedProfile, isAdmin }) => {
               <h3>List Name</h3>
               <input 
                 type="text"
-                placeholder="Enter profile name"
+                placeholder="Enter a Name"
                 value={formListName}
                 onChange={handleListNameChange}
               />
@@ -135,7 +149,7 @@ const ProtectedPage = ({ isLoggedIn, selectedProfile, isAdmin }) => {
               <h3>New Chore Name</h3>
               <input 
                 type="text"
-                placeholder="Enter profile name"
+                placeholder="Enter a Name"
                 value={formChoreName}
                 onChange={handleChoreNameChange}
               />
@@ -144,7 +158,7 @@ const ProtectedPage = ({ isLoggedIn, selectedProfile, isAdmin }) => {
               <h4>Description of the Chore</h4>
               <input 
                 type="text"
-                placeholder="Enter profile name"
+                placeholder="What is this Chore?"
                 value={formChoreDesc}
                 onChange={handleChoreDescChange}
               />
@@ -153,7 +167,7 @@ const ProtectedPage = ({ isLoggedIn, selectedProfile, isAdmin }) => {
               <p>How many rewards points is this Chore worth?</p>
               <input 
                 type="text"
-                placeholder="Enter profile name"
+                placeholder="Rewards Points"
                 value={formChorePoints}
                 onChange={handleChorePointsChange}
               />

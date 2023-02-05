@@ -61,8 +61,8 @@ const typeDefs = gql`
     setPin(_id: String!, pin: String!): User
     setAdmin(_id: String!, name: String!): User
 
-    createChore(_id: String!, name: String!, description: String, points: Int): List
-    updateChore(_id: String!, _idChore: String!, name: String!, description: String!, points: Int!): List
+    createChore(_id: String!, name: String!, description: String, points: String, flavorText: String): List
+    updateChore(_id: String!, _idChore: String!, name: String!, description: String!, points: String!): List
     deleteChore(_id: String!, _idChore: String!): List
     
     createList(_idAdmin: String!, name: String!): List

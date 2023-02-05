@@ -1,7 +1,7 @@
 import { gql } from "@apollo/client";
 
 export const CREATE_CHORE = gql`
-mutation CreateChore($id: String!, $name: String!, $description: String, $points: Int, $flavorText: String) {
+mutation CreateChore($id: String!, $name: String!, $description: String, $points: String, $flavorText: String) {
   createChore(_id: $id, name: $name, description: $description, points: $points, flavorText: $flavorText) {
     _id
     chores {
@@ -16,7 +16,7 @@ mutation CreateChore($id: String!, $name: String!, $description: String, $points
 `;
 
 export const UPDATE_CHORE = gql`
-mutation UpdateChore($id: String!, $idChore: String!, $name: String!, $description: String!, $points: Int!, $flavorText: String!) {
+mutation UpdateChore($id: String!, $idChore: String!, $name: String!, $description: String!, $points: String!, $flavorText: String!) {
   updateChore(_id: $id, _idChore: $idChore, name: $name, description: $description, points: $points, flavorText: $flavorText) {
     chores {
       _id
