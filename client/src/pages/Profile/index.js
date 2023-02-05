@@ -38,7 +38,7 @@ const LoginPage = ({ isLoggedIn, selectedProfile, setSelectedProfile, isAdmin, s
   }
 
 
-  const handleCreateProfile = async (profileName) => {
+  const handleCreateProfile = async (profileName, selected = false) => {
     const newProfiles = await CreateProfile({
       variables: {
         id: userData.me._id,
@@ -46,6 +46,9 @@ const LoginPage = ({ isLoggedIn, selectedProfile, setSelectedProfile, isAdmin, s
       },
     });
     GetProfiles();
+    if (selected) {
+      return;
+    }
     setSelectedProfile(newProfiles.data.createProfile.profiles[
       newProfiles.data.createProfile.profiles.length - 1].name);
   };
@@ -236,7 +239,7 @@ const LoginPage = ({ isLoggedIn, selectedProfile, setSelectedProfile, isAdmin, s
             placeholder="Enter profile name"
             onKeyPress={event => {
               if (event.key === 'Enter') {
-                handleCreateProfile(event.target.value);
+                handleCreateProfile(event.target.value, true);
                 event.target.value="";
               }
             }}

@@ -4,7 +4,7 @@ const bcrypt = require("bcrypt");
 const profileSchema = new Schema({
   name: String,
   isAdmin: Boolean,
-  points: Number
+  points: String
 });
 
 const userSchema = new Schema({

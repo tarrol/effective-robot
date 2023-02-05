@@ -38,7 +38,7 @@ const resolvers = {
       user.profiles.push({
         name: name,
         isAdmin: true,
-        points: 0
+        points: "0"
       });
       const token = signToken(user);
       return { token, user };
@@ -64,7 +64,7 @@ const resolvers = {
     createProfile: async (parent, { _id, name }) => {
       const user = await User.findByIdAndUpdate(
         { _id },
-        { $push: { profiles: { name: name, isAdmin: false, points: 0 } } },
+        { $push: { profiles: { name: name, isAdmin: false, points: "0" } } },
         { new: true }
       );
       return user;
@@ -92,6 +92,16 @@ const resolvers = {
         { $set: {
           "profiles.$.isAdmin" : true
         }},
+        { new: true }
+      );
+      return user;
+    },
+    updateProfilePoints: async (parent, {_id, name, points}) => {
+      const user = User.findOneAndUpdate(
+        { _id: _id, "profiles.name": name},
+        { $set: {
+          "profiles.$.points": points
+        } },
         { new: true }
       );
       return user;

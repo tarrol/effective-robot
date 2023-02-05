@@ -67,3 +67,14 @@ mutation SetAdmin($id: String!, $name: String!) {
 }
 `
 
+export const UPDATE_PROFILE_POINTS = gql`
+mutation UpdateProfilePoints($id: String!, $name: String!, $points: String!) {
+  updateProfilePoints(_id: $id, name: $name, points: $points) {
+    _id
+    profiles {
+      name
+      points
+    }
+  }
+}
+`;

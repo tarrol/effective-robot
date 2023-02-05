@@ -13,8 +13,8 @@ const choreSchema = new Schema({
     default: "",
   },
   points: {
-    type: Number,
-    default: 0,
+    type: String,
+    default: "0",
   },
   flavorText: {
     type: String,

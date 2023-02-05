@@ -4,7 +4,7 @@ const typeDefs = gql`
   type profileSchema {
     name: String!
     isAdmin: Boolean!
-    points: Int!
+    points: String
   }
   type User {
     _id: ID
@@ -24,7 +24,7 @@ const typeDefs = gql`
     _id: ID!
     name: String!
     description: String
-    points: Int
+    points: String
     flavorText: String
     listId: ID
     isComplete: Boolean
@@ -62,9 +62,10 @@ const typeDefs = gql`
     createProfile(_id: String!, name: String!): User
     setPin(_id: String!, pin: String!): User
     setAdmin(_id: String!, name: String!): User
+    updateProfilePoints(_id: String!, name: String!, points: String!): User
 
     createChore(_id: String!, name: String!, description: String, points: String, flavorText: String): List
-    updateChore(_id: String!, _idChore: String!, name: String!, description: String!, points: String!, isComplete: Boolean!): List
+    updateChore(_id: String!, _idChore: String!, name: String!, description: String!, points: String!, flavorText: String!, isComplete: Boolean!): List
     deleteChore(_id: String!, _idChore: String!): List
     
     createList(_idAdmin: String!, name: String!): List
