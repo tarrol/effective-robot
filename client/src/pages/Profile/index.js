@@ -24,12 +24,15 @@ const LoginPage = ({ isLoggedIn }) => {
   const [SetAdmin, { error: adminError }] = useMutation(SET_ADMIN);
   const [SetPin, { error: pinError }] = useMutation(SET_PIN);
 
-  const SelectProfile = (name) => {
-    setSelectedProfile(name);
-    if (adminName.getAdmin.profiles[0].name == name)
-    {
-      setIsAdmin(true);
+  const SelectProfile = async (name) => {
+    if (adminName.getAdmin.profiles[0].name == name) {
+      let verify = await CheckForAdmin();
+      if (verify) {
+        setSelectedProfile(name);
+        setIsAdmin(true);
+      } 
     } else {
+      setSelectedProfile(name);
       setIsAdmin(false);
     }
   }
@@ -47,18 +50,16 @@ const LoginPage = ({ isLoggedIn }) => {
       newProfiles.data.createProfile.profiles.length - 1].name);
   };
 
-  // const handleSelectProfile = (profileName) => {
-  //   const updatedProfiles = profiles.map(profile => {
-  //     if (profile.name === profileName) {
-  //       profile.isLoggedIn = true;
-  //     } else {
-  //       profile.isLoggedIn = false;
-  //     }
-  //     return profile;
-  //   });
-  //   setProfiles(updatedProfiles);
-  //   setSelectedProfile(profileName);
-  // };
+  const CheckForAdmin = async () => {
+    let _pin = prompt("Please enter your PIN to verify admin status.", "4 digit PIN");
+    if (_pin == userData.me.pin) {
+      return true;
+    } else {
+      alert("Wrong PIN");
+      return false;
+    }
+  }
+
 
   const handleMakeAdmin = async (profileName) => {
     await SetAdmin({
