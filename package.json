@@ -12,7 +12,7 @@
       "install": "cd server && npm i && cd ../client && npm i",
       "install-client": "cd client && npm install",
       "heroku-postbuild": "npm run install-client && npm run build",
-      "server": "nodemon server.js",
+      "server": "node ./server/server.js",
       "develop": "concurrently \"npm run server\" \"npm run start --prefix client\"",
       "start": "concurrently \"npm run server\" \"npm run start --prefix client\""
     },
