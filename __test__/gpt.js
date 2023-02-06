@@ -1,3 +1,4 @@
+const { LogTimings } = require('concurrently');
 const got = require('got');
 require('dotenv').config();
 
@@ -25,13 +26,15 @@ async function callGPT(chore, theme) {
 
   try {
     const response = await got.post(url, { json: params, headers: headers }).json();
-    output = `${prompt}\n${response.choices[0].text}`;
-    console.log(output);
+    const gptOutput = response.choices[0].text;
+    //console.log(response.choices[0].text); //text output
+    //console.log(typeof (response.choices[0].text)); //string output
+
   } catch (err) {
     console.log(err);
   }
 };
 
-// callGPT(chore, theme);
+//callGPT(chore, theme);
 
 module.exports = callGPT();
