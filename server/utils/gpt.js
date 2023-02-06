@@ -18,7 +18,7 @@ module.exports = {
   const params = {
     "model": "text-davinci-003",
     "prompt": `${prompt}`,
-    "max_tokens": 50,
+    "max_tokens": 350,
     "temperature": 0.6
   };
   const headers = {
