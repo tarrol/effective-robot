@@ -1,6 +1,7 @@
 const { AuthenticationError } = require("apollo-server-express");
 const { User, List, Reward, Chore } = require("../models");
 const { signToken } = require("../utils/auth.js");
+const { callGPT } = require("../utils/gpt.js");
 
 const resolvers = {
   Query: {
@@ -115,13 +116,14 @@ const resolvers = {
 
     // Chore Mutations
     //tested: works
-    createChore: async (parent, { _id, name, description, points, flavorText }) => {
+    createChore: async (parent, { _id, name, description, points, flavorText, theme }) => {
+      const _flavor = await callGPT(name, theme);
       const chore = await Chore.create({
         name: name,
         description: description,
         points: points,
         listId: _id,
-        flavorText: flavorText,
+        flavorText: _flavor,
         isComplete: false
       });
       const list = await List.findByIdAndUpdate(
@@ -162,11 +164,12 @@ const resolvers = {
       return list;
     },
     // tested: works
-    createList: async (parent, { _idAdmin, name }) => {
+    createList: async (parent, { _idAdmin, name, theme }) => {
       const list = await List.create({
         name: name,
         chores: [],
         admin: _idAdmin,
+        theme: theme
       });
       return list;
     },

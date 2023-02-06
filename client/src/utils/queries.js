@@ -38,6 +38,7 @@ query MyLists($id: String!) {
   myLists(_id: $id) {
     _id
     name
+    theme
     chores {
       _id
       description

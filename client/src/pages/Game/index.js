@@ -10,7 +10,10 @@ const ProtectedPage = ({ isLoggedIn, selectedProfile, isAdmin }) => {
   const [data, setData] = useState([]);
   const [selectedList, setList] = useState(null);
 
+  const [gptMessage, setGPTMessage] = useState(null);
+
   const [formListName, setListName] = useState("");
+  const [formListTheme, setListTheme] = useState("");
   const [formChoreName, setChoreName] = useState("");
   const [formChoreDesc, setChoreDesc] = useState("");
   const [formChorePoints, setChorePoints] = useState("");
@@ -26,21 +29,6 @@ const ProtectedPage = ({ isLoggedIn, selectedProfile, isAdmin }) => {
     = useQuery(QUERY_MYLISTS, { variables: { id } } );
 
 
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     const result = await axios('<API_ENDPOINT>');
-  //     setData(result.data);
-  //   };
-
-  //   if (isLoggedIn) {
-  //     fetchData();
-  //   }
-  // }, [isLoggedIn]);
-
-  // if (!isLoggedIn) {
-  //   return <button onClick={() => setIsLoggedIn(true)}>Login</button>;
-  // }
-
   const GetProfilePoints = (name) => {
     if (!userData.me) {
       return "";
@@ -54,6 +42,10 @@ const ProtectedPage = ({ isLoggedIn, selectedProfile, isAdmin }) => {
     return "";
   }
 
+  const ShowFlavor = (text) => {
+    setGPTMessage(text);
+  }
+
   const HandleListSelect = (listName, index) => {
     setList({'listName': listName, 'index': index});
   };
@@ -61,15 +53,22 @@ const ProtectedPage = ({ isLoggedIn, selectedProfile, isAdmin }) => {
     const { value } = e.target;
     setListName(value);
   };
+  const handleListThemeChange = (e) => {
+    const { value } = e.target;
+    setListTheme(value);
+  }
   const handleListFormSubmit = async (event) => {
     event.preventDefault();
 
     await CreateList({
       variables: {
         _idAdmin: id,
-        name: formListName
+        name: formListName,
+        theme: formListTheme
       }
     });
+    setListName("");
+    setListTheme("");
     refetchList();
   };
 
@@ -94,7 +93,8 @@ const ProtectedPage = ({ isLoggedIn, selectedProfile, isAdmin }) => {
         name: formChoreName,
         description: formChoreDesc,
         points: formChorePoints,
-        flavorText: ""
+        flavorText: "",
+        theme: listData.myLists[selectedList.index].theme
       }
     });
     setChoreName("");
@@ -165,6 +165,15 @@ const ProtectedPage = ({ isLoggedIn, selectedProfile, isAdmin }) => {
                 onChange={handleListNameChange}
               />
             </div>
+            <div>
+              <h3>List Theme</h3>
+              <input 
+                type="text"
+                placeholder="Enter a Theme: ie. pirate, space, candy"
+                value={formListTheme}
+                onChange={handleListThemeChange}
+              />
+            </div>
             <button type="submit" onClick={handleListFormSubmit}>Submit</button>
           </form>
         ) : (
@@ -180,10 +189,15 @@ const ProtectedPage = ({ isLoggedIn, selectedProfile, isAdmin }) => {
       Welcome to the Chores Game {selectedProfile}. You have {GetProfilePoints(selectedProfile)} Points.
       {/* <EndpointBox endpoint='<API_ENDPOINT>' /> */}
       <h1>{listData.myLists[selectedList.index].name}</h1>
+      {gptMessage ? (
+        <p>{gptMessage}</p>
+      ) : (
+        <div></div>
+      )}
       <ul>
         {listData.myLists[selectedList.index].chores.map(item => (
           <li key={item._id}>
-            <p>{item.name}: {item.points} points</p>
+            <p onClick={() => ShowFlavor(item.flavorText)}>{item.name}: {item.points} points</p>
             {item.isComplete ? (
               <p>Completed</p>
             ): (

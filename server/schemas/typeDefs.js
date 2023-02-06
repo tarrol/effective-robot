@@ -35,6 +35,7 @@ const typeDefs = gql`
     name: String!
     chores: [Chore]!
     admin: ID
+    theme: String
   }
 
   type Reward {
@@ -64,11 +65,11 @@ const typeDefs = gql`
     setAdmin(_id: String!, name: String!): User
     updateProfilePoints(_id: String!, name: String!, points: String!): User
 
-    createChore(_id: String!, name: String!, description: String, points: String, flavorText: String): List
+    createChore(_id: String!, name: String!, description: String, points: String, flavorText: String, theme: String): List
     updateChore(_id: String!, _idChore: String!, name: String!, description: String!, points: String!, flavorText: String!, isComplete: Boolean!): List
     deleteChore(_id: String!, _idChore: String!): List
     
-    createList(_idAdmin: String!, name: String!): List
+    createList(_idAdmin: String!, name: String!, theme: String!): List
     deleteList(_id: String!): List
     
     createReward(_idAdmin: String!, name: String!, cost: Int): Reward

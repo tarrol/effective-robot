@@ -1,6 +1,6 @@
 const { LogTimings } = require('concurrently');
 const got = require('got');
-require('dotenv').config();
+require('dotenv').config({ path: './.env' })
 
 //api key will be in discord at some point
 const apiKey = process.env.OPENAI_API_KEY;
@@ -10,8 +10,9 @@ const theme = 'pirate';
 const chore = 'dust the living room';
 
 
-async function callGPT(chore, theme) {
-  //Prompt function, so that it can pass the variables of 'chore' and 'theme' in a return() to chatGPT
+module.exports = {
+  callGPT: async function (chore, theme) {
+    //Prompt function, so that it can pass the variables of 'chore' and 'theme' in a return() to chatGPT
   const prompt = `Write me a videogame style quest about the task "${chore}" as if it was written by a ${theme}.`;
   const url = 'https://api.openai.com/v1/completions';
   const params = {
@@ -27,14 +28,17 @@ async function callGPT(chore, theme) {
   try {
     const response = await got.post(url, { json: params, headers: headers }).json();
     const gptOutput = response.choices[0].text;
-    //console.log(response.choices[0].text); //text output
+    return gptOutput; //text output
     //console.log(typeof (response.choices[0].text)); //string output
 
   } catch (err) {
     console.log(err);
   }
+  }
 };
 
-//callGPT(chore, theme);
 
-module.exports = callGPT();
+
+// callGPT(chore, theme);
+
+// module.exports = callGPT();
