@@ -7,9 +7,9 @@ function Navigation({currentTab, setCurrentTab, isLoggedIn, setIsLoggedIn }) {
   return (
     <nav>
       <ul className="flex-row mobile-view">
-        <li className={currentTab === "home" ? "mx-2 navActive" : "mx-2"}>
+        {/* <li className={currentTab === "home" ? "mx-2 navActive" : "mx-2"}>
           <span onClick={() => setCurrentTab("home")}>Home </span>
-        </li>
+        </li> */}
         {isLoggedIn && (
           <li className={currentTab === "game" ? "mx-2 navActive" : "mx-2"}>
             <span onClick={() => setCurrentTab("game")}>Game</span>

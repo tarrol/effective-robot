@@ -7,7 +7,7 @@ function Header({currentTab, setCurrentTab, isLoggedIn, setIsLoggedIn }) {
   return (
     <header>
       <div>
-        <h2>Logo</h2>
+        {/* <h2>Logo</h2> */}
       </div>
       <div>
         <Navigation

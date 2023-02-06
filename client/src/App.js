@@ -33,7 +33,7 @@ const client = new ApolloClient({
 });
 
 function App() {
-  const [currentTab, setCurrentTab] = useState("home"); // Initial value set to "home"
+  const [currentTab, setCurrentTab] = useState("login"); // Initial value set to "home"
   const [isLoggedIn, setIsLoggedIn] = React.useState(false);
   const [selectedProfile, setSelectedProfile] = useState(null);
   const [isAdmin, setIsAdmin] = useState(false);
