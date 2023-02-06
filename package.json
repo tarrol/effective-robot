@@ -1,29 +1,34 @@
 {
+  {
   "name": "merntemplate",
   "engines": {
-    "node" : ">=16.0.0 <17.0.0",
-    "npm": "8.19.2"
+    "node" : "=>16 <17",
+    "npm" : "8.19.2"
   },
   "version": "1.0.0",
   "description": "",
   "main": "server/server.js",
   "scripts": {
-    "build": "cd client && npm run build",
-    "install-client": "cd client && npm install",
-    "heroku-postbuild": "npm run install-client && npm run build",
-    "server": "nodemon server.js",
-    "develop": "concurrently --kill-others-on-fail \"npm run server\" \"npm run start --prefix client\"",
-    "start": "concurrently --kill-others-on-fail \"npm run server\" \"npm run start --prefix client\""
-  },
+      "build": "cd client && npm run build",
+      "install": "cd server && npm i && cd ../client && npm i",
+      "install-client": "cd client && npm install",
+      "heroku-postbuild": "npm run install-client && npm run build",
+      "server": "nodemon server.js",
+      "develop": "concurrently --kill-others-on-fail \"npm run server\" \"npm run start --prefix client\"",
+      "start": "concurrently --kill-others-on-fail \"npm run server\" \"npm run start --prefix client\""
+    },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
     "concurrently": "^7.6.0"
   },
-  "dependencies": {
+   "dependencies": {
     "dotenv": "^16.0.3",
     "got": "^11.8.0",
     "openai": "^3.1.0"
   }
 }
+
+  
+  
