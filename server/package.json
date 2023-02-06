@@ -1,7 +1,6 @@
 {
   "name": "server",
   "version": "1.0.0",
-  "description": "",
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
@@ -14,13 +13,14 @@
   "dependencies": {
     "apollo-server-express": "^3.6.2",
     "bcrypt": "^5.1.0",
+    "dotenv": "^16.0.3",
     "express": "^4.17.2",
     "graphql": "^16.3.0",
     "jsonwebtoken": "^9.0.0",
-    "mongoose": "^6.2.0",
-    "dotenv": "^16.0.3"
+    "mongoose": "^6.2.0"
   },
   "devDependencies": {
     "nodemon": "^2.0.20"
-  }
+  },
+  "description": ""
 }

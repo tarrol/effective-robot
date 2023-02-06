@@ -1,6 +1,12 @@
 const { Schema, model } = require("mongoose");
 const bcrypt = require("bcrypt");
 
+const profileSchema = new Schema({
+  name: String,
+  isAdmin: Boolean,
+  points: String
+});
+
 const userSchema = new Schema({
   name: {
     type: String,
@@ -17,6 +23,18 @@ const userSchema = new Schema({
     type: String,
     required: true,
     minlength: 5,
+  },
+  pin: {
+    type: String,
+    validate: {
+      validator: function (value) {
+        return /^\d{4}$/.test(value);
+      },
+      message: "{VALUE} is not a valid 4-digit PIN!",
+    },
+  },
+  profiles: {
+    type: [profileSchema],
   },
 });
 
