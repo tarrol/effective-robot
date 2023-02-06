@@ -16,7 +16,7 @@ async function callGPT(chore, theme) {
   const params = {
     "model": "text-davinci-003",
     "prompt": `${prompt}`,
-    "max_tokens": 200,
+    "max_tokens": 50,
     "temperature": 0.6
   };
   const headers = {
@@ -32,4 +32,6 @@ async function callGPT(chore, theme) {
   }
 };
 
-callGPT(chore, theme);
+// callGPT(chore, theme);
+
+module.exports = callGPT();
