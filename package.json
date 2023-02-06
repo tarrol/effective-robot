@@ -8,12 +8,20 @@
     "develop": "concurrently \"cd server && npm run watch\" \"cd client && npm start\"",
     "install": "cd server && npm i && cd ../client && npm i",
     "seed": "cd server && npm run seed",
-    "build": "cd client && npm run build"
+    "build": "cd client && npm run build",
+    "test": "jest --verbose test/*",
+    "startGPT": "node --experimental-modules __test__/gpt.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "concurrently": "^7.6.0"
+    "concurrently": "^7.6.0",
+    "jest": "^24.8.0"
+  },
+  "dependencies": {
+    "dotenv": "^16.0.3",
+    "got": "^11.8.0",
+    "openai": "^3.1.0"
   }
 }
